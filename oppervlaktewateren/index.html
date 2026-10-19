@@ -58,11 +58,11 @@
 const BASE = "https://flatgeobuf.blob.core.windows.net/hhrlegger";
 // Listed bottom to top (draw order)
 const LAYERS = [
-  { id: "watergang_beschermingszone", title: "Protection zone" },
-  { id: "watergang_kernzone", title: "Core zone" },
-  { id: "watergang_vlak", title: "Water surface (polygons)" },
-  { id: "watergang_begroeiing", title: "Vegetation" },
-  { id: "watergang_as", title: "Watercourse centerline" }
+  { id: "watergang_beschermingszone", title: "Beschermingszone" },
+  { id: "watergang_kernzone", title: "Kernzone" },
+  { id: "watergang_vlak", title: "Watergang vlak" },
+  { id: "watergang_begroeiing", title: "Watergang begroeiing" },
+  { id: "watergang_as", title: "Watergang as" }
 ];
 
 maplibregl.addProtocol("pmtiles", new pmtiles.Protocol().tile);
