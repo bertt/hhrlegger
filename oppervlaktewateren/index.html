@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HHR legger - oppervlaktewateren</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@3.2.0/dist/pmtiles.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; color: #323232; }
+  #header { height: 48px; background: #0b5394; color: #fff; display: flex; align-items: center; padding: 0 16px; font-size: 18px; font-weight: 600; }
+  #main { display: flex; height: calc(100% - 48px); }
+  #sidebar { width: 320px; min-width: 320px; background: #fff; border-right: 1px solid #ccc; display: flex; flex-direction: column; z-index: 2; transition: margin-left .2s; }
+  #sidebar.collapsed { margin-left: -320px; }
+  #tabs { display: flex; border-bottom: 1px solid #ccc; }
+  #tabs button { flex: 1; padding: 12px 0; border: 0; background: #f4f4f4; cursor: pointer; font-size: 14px; border-bottom: 3px solid transparent; }
+  #tabs button.active { background: #fff; border-bottom-color: #0b5394; font-weight: 600; }
+  .panel { display: none; overflow-y: auto; padding: 12px; flex: 1; }
+  .panel.active { display: block; }
+  #toggle { position: absolute; top: 60px; left: 332px; z-index: 3; width: 32px; height: 32px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; transition: left .2s; }
+  #sidebar.collapsed + #toggle, #toggle.collapsed { left: 12px; }
+  #map { flex: 1; position: relative; }
+  .layer-row { display: flex; align-items: center; gap: 8px; padding: 8px 4px; border-bottom: 1px solid #eee; }
+  .layer-row label { flex: 1; cursor: pointer; }
+  .layer-row input[type=range] { width: 70px; }
+  .legend-group { margin-bottom: 16px; }
+  .legend-group h4 { margin: 0 0 6px; font-size: 14px; }
+  .legend-sub { font-size: 12px; color: #666; margin-bottom: 4px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+  .swatch { width: 24px; height: 14px; flex: none; border: 1px solid rgba(0,0,0,.35); }
+  .swatch.line { height: 0; border: 0; border-top: 3px solid; }
+  .maplibregl-popup-content { max-width: 340px; max-height: 320px; overflow: auto; padding: 12px; }
+  .maplibregl-popup-content h3 { margin: 0 16px 6px 0; font-size: 15px; }
+  .maplibregl-popup-content table { border-collapse: collapse; width: 100%; }
+  .maplibregl-popup-content td { padding: 3px 6px; border-bottom: 1px solid #eee; vertical-align: top; word-break: break-word; }
+  .maplibregl-popup-content td:first-child { font-weight: 600; color: #555; white-space: nowrap; }
+  .feat-sep { margin: 10px 0; border: 0; border-top: 2px solid #0b5394; }
+</style>
+</head>
+<body>
+<div id="header">HHR legger - oppervlaktewateren</div>
+<div id="main">
+  <div id="sidebar">
+    <div id="tabs">
+      <button class="active" data-tab="layers">Layers</button>
+      <button data-tab="legend">Legend</button>
+    </div>
+    <div id="layers" class="panel active"></div>
+    <div id="legend" class="panel"></div>
+  </div>
+  <button id="toggle" title="Toggle sidebar">&#9776;</button>
+  <div id="map"></div>
+</div>
+
+<script>
+const BASE = "https://flatgeobuf.blob.core.windows.net/hhrlegger";
+// Listed bottom to top (draw order)
+const LAYERS = [
+  { id: "watergang_beschermingszone", title: "Protection zone" },
+  { id: "watergang_kernzone", title: "Core zone" },
+  { id: "watergang_vlak", title: "Water surface (polygons)" },
+  { id: "watergang_begroeiing", title: "Vegetation" },
+  { id: "watergang_as", title: "Watercourse centerline" }
+];
+
+maplibregl.addProtocol("pmtiles", new pmtiles.Protocol().tile);
+
+const map = new maplibregl.Map({
+  container: "map",
+  center: [4.55, 52.2],
+  zoom: 9,
+  style: {
+    version: 8,
+    sources: { osm: { type: "raster", tileSize: 256, attribution: "&copy; OpenStreetMap contributors",
+      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"] } },
+    layers: [{ id: "osm", type: "raster", source: "osm" }]
+  }
+});
+map.addControl(new maplibregl.NavigationControl(), "top-right");
+map.addControl(new maplibregl.ScaleControl(), "bottom-left");
+
+const state = {}; // id -> {title, styleLayers:[ids], legend:[...]}
+
+function colorLegend(layer) {
+  const paint = layer.paint || {};
+  const key = layer.type === "line" ? "line-color" : "fill-color";
+  const c = paint[key];
+  const kind = layer.type === "line" ? "line" : "fill";
+  if (Array.isArray(c) && c[0] === "match") {
+    const items = [];
+    for (let i = 2; i < c.length - 1; i += 2) {
+      (Array.isArray(c[i]) ? c[i] : [c[i]]).forEach(v => items.push({ label: String(v), color: c[i + 1], kind }));
+    }
+    items.push({ label: "Other", color: c[c.length - 1], kind });
+    return { attr: c[1][1], items };
+  }
+  return { attr: null, items: [{ label: "All features", color: typeof c === "string" ? c : "#888", kind,
+    outline: paint["fill-outline-color"] }] };
+}
+
+async function addLayer(def) {
+  const style = await (await fetch(`${BASE}/${def.id}/styles/default.json`)).json();
+  const src = `src-${def.id}`;
+  const s = style.sources.data;
+  map.addSource(src, { type: "vector", url: `pmtiles://${BASE}/${def.id}/${def.id}.pmtiles`,
+    minzoom: s.minzoom, maxzoom: s.maxzoom });
+  const ids = [];
+  const legend = [];
+  style.layers.forEach(l => {
+    const nl = { ...l, id: `${def.id}-${l.id}`, source: src };
+    map.addLayer(nl);
+    ids.push(nl.id);
+    legend.push(colorLegend(l));
+  });
+  state[def.id] = { title: def.title, ids, legend };
+}
+
+function buildUI() {
+  const lp = document.getElementById("layers");
+  const gp = document.getElementById("legend");
+  [...LAYERS].reverse().forEach(def => {
+    const st = state[def.id];
+    const row = document.createElement("div");
+    row.className = "layer-row";
+    row.innerHTML = `<input type="checkbox" id="chk-${def.id}" checked>
+      <label for="chk-${def.id}">${def.title}</label>
+      <input type="range" min="0" max="100" value="100" title="Opacity">`;
+    row.querySelector("input[type=checkbox]").addEventListener("change", e => {
+      st.ids.forEach(id => map.setLayoutProperty(id, "visibility", e.target.checked ? "visible" : "none"));
+      document.getElementById(`lg-${def.id}`).style.display = e.target.checked ? "" : "none";
+    });
+    row.querySelector("input[type=range]").addEventListener("input", e => {
+      const o = e.target.value / 100;
+      st.ids.forEach(id => {
+        const t = map.getLayer(id).type;
+        map.setPaintProperty(id, t === "line" ? "line-opacity" : "fill-opacity", o);
+      });
+    });
+    lp.appendChild(row);
+
+    const g = document.createElement("div");
+    g.className = "legend-group";
+    g.id = `lg-${def.id}`;
+    g.innerHTML = `<h4>${def.title}</h4>` + st.legend.map(lg =>
+      (lg.attr ? `<div class="legend-sub">${lg.attr}</div>` : "") +
+      lg.items.map(i => {
+        const style = i.kind === "line" ? `border-top-color:${i.color}`
+          : `background:${i.color};${i.outline ? `border-color:${i.outline}` : ""}`;
+        return `<div class="legend-item"><span class="swatch ${i.kind}" style="${style}"></span>${i.label}</div>`;
+      }).join("")).join("");
+    gp.appendChild(g);
+  });
+}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+map.on("click", e => {
+  const px = 4;
+  const visible = Object.values(state).flatMap(s => s.ids).filter(id => map.getLayoutProperty(id, "visibility") !== "none");
+  const feats = map.queryRenderedFeatures([[e.point.x - px, e.point.y - px], [e.point.x + px, e.point.y + px]], { layers: visible });
+  if (!feats.length) return;
+  const seen = new Set();
+  let html = "";
+  feats.forEach(f => {
+    const def = LAYERS.find(d => d.id === f.sourceLayer);
+    const key = f.sourceLayer + JSON.stringify(f.properties);
+    if (seen.has(key)) return;
+    seen.add(key);
+    const rows = Object.entries(f.properties).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("");
+    html += (html ? '<hr class="feat-sep">' : "") + `<h3>${esc(def ? def.title : f.sourceLayer)}</h3><table>${rows}</table>`;
+  });
+  new maplibregl.Popup({ maxWidth: "360px" }).setLngLat(e.lngLat).setHTML(html).addTo(map);
+});
+
+map.on("mousemove", e => {
+  const visible = Object.values(state).flatMap(s => s.ids).filter(id => map.getLayoutProperty(id, "visibility") !== "none");
+  map.getCanvas().style.cursor = map.queryRenderedFeatures(e.point, { layers: visible }).length ? "pointer" : "";
+});
+
+map.on("load", async () => {
+  for (const def of LAYERS) await addLayer(def);
+  buildUI();
+  try {
+    const r = await fetch(`${BASE}/watergang_as/watergang_as.pmtiles`, { headers: { Range: "bytes=0-126" } });
+    const b = new DataView(await r.arrayBuffer());
+    const num = o => Number(b.getInt32(o, true)) / 1e7;
+    const bounds = [num(102), num(106), num(110), num(114)];
+    if (bounds.every(isFinite) && bounds[0] < bounds[2]) map.fitBounds(bounds, { padding: 40, animate: false });
+  } catch (_) {}
+});
+
+document.querySelectorAll("#tabs button").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll("#tabs button, .panel").forEach(el => el.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+document.getElementById("toggle").addEventListener("click", e => {
+  document.getElementById("sidebar").classList.toggle("collapsed");
+  e.currentTarget.classList.toggle("collapsed");
+  setTimeout(() => map.resize(), 250);
+});
+</script>
+</body>
+</html>
