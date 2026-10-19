@@ -71,12 +71,7 @@ const map = new maplibregl.Map({
   container: "map",
   center: [4.55, 52.2],
   zoom: 9,
-  style: {
-    version: 8,
-    sources: { osm: { type: "raster", tileSize: 256, attribution: "&copy; OpenStreetMap contributors",
-      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"] } },
-    layers: [{ id: "osm", type: "raster", source: "osm" }]
-  }
+  style: "https://tiles.openfreemap.org/styles/liberty"
 });
 map.addControl(new maplibregl.NavigationControl(), "top-right");
 map.addControl(new maplibregl.ScaleControl(), "bottom-left");
@@ -100,6 +95,8 @@ function colorLegend(layer) {
     outline: paint["fill-outline-color"] }] };
 }
 
+let firstSymbol; // keep basemap labels above the data layers
+
 async function addLayer(def) {
   const style = await (await fetch(`${BASE}/${def.id}/styles/default.json`)).json();
   const src = `src-${def.id}`;
@@ -110,7 +107,7 @@ async function addLayer(def) {
   const legend = [];
   style.layers.forEach(l => {
     const nl = { ...l, id: `${def.id}-${l.id}`, source: src };
-    map.addLayer(nl);
+    map.addLayer(nl, firstSymbol);
     ids.push(nl.id);
     legend.push(colorLegend(l));
   });
@@ -180,6 +177,8 @@ map.on("mousemove", e => {
 });
 
 map.on("load", async () => {
+  const sym = map.getStyle().layers.find(l => l.type === "symbol");
+  firstSymbol = sym && sym.id;
   for (const def of LAYERS) await addLayer(def);
   buildUI();
   try {
