@@ -6,6 +6,8 @@ This project recreates the original Esri map of Hoogheemraadschap van Rijnland (
 
 The approach is cloud native geo: there are no servers or databases to run. All data (GeoParquet, PMTiles, styles, STAC catalog) is static files deployed on an S3-compatible blob store (Azure Blob Storage) and read directly by clients over HTTP range requests.
 
+The catalog metadata follows [STAC](https://stacspec.org/) (SpatioTemporal Asset Catalog), an open standard to describe geospatial data as JSON: a `catalog.json` links to collections, which describe their data files (assets) such as GeoParquet and PMTiles.
+
 - Original Esri map: https://rijnland.maps.arcgis.com/apps/instant/sidebar/index.html?appid=f0fd839278474fe7841a12800fcc3e39
 - HHR legger - oppervlaktewateren (recreated): https://bertt.github.io/hhrlegger/oppervlaktewateren/
 
