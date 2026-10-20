@@ -89,3 +89,5 @@ MapLibre demo: https://bertt.github.io/hhrlegger/oppervlaktewateren/
 
 The demo contains links to the PMTiles files and the style JSON files (`styles/default.json`) published in the catalog (see the Result table above).
 
+The basemap is provided by [OpenFreeMap](https://openfreemap.org/).
+
