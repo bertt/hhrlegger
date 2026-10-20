@@ -121,10 +121,6 @@ portolan clone https://flatgeobuf.blob.core.windows.net/hhrlegger
 | watergang_kernzone | [watergang_kernzone.pmtiles](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_kernzone/watergang_kernzone.pmtiles) | [default.json](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_kernzone/styles/default.json) | [watergang_kernzone.parquet](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_kernzone/watergang_kernzone.parquet) | [README.md](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_kernzone/README.md) | [AGENTS.md](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_kernzone/AGENTS.md) |
 | watergang_vlak | [watergang_vlak.pmtiles](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_vlak/watergang_vlak.pmtiles) | [default.json](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_vlak/styles/default.json) | [watergang_vlak.parquet](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_vlak/watergang_vlak.parquet) | [README.md](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_vlak/README.md) | [AGENTS.md](https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_vlak/AGENTS.md) |
 
-## Todo
-
-- Fill AGENTS.md for catalog and datasets
-
 ## Demo
 
 MapLibre demo: https://bertt.github.io/hhrlegger/oppervlaktewateren/
@@ -153,7 +149,7 @@ Status as of October 2026; check ogc.org for the latest.
 
 ## Querying the catalog with agents
 
-The catalog is designed to be queried by AI agents as well (planned, not fully in place yet, see Todo).
+The catalog is designed to be queried by AI agents as well.
 
 - Each collection publishes GeoParquet plus an `AGENTS.md` (e.g. `watergang_as/AGENTS.md`), and there is one at catalog level describing layers, attributes, CRS, license and example queries.
 - An agent starts at the catalog URL (`https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`), follows the STAC links, reads the relevant `AGENTS.md` and queries the GeoParquet directly over HTTP with a tool such as DuckDB.
