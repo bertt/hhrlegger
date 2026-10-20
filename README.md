@@ -19,6 +19,8 @@ portolan extract arcgis https://rijnland.enl-mcs.nl/arcgis/rest/services/Leggers
 
 ### 3. Add PMTiles
 
+Requires [tippecanoe](https://github.com/felt/tippecanoe) to be installed and available on the `PATH`.
+
 ```bash
 cd leggers_legger_oppervlaktewater_vigerend
 
