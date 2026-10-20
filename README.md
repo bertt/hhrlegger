@@ -190,7 +190,7 @@ LIMIT 5;
 
 ### Federated query
 
-Because every catalog publishes GeoParquet in the same CRS (EPSG:28992), an agent can combine data from several catalogs in a single query. The example below combines the water board catalog (Rijnland legger) with the [Portolan NL](https://source.coop/cholmes/portolan-nl) catalog (PDOK data).
+An agent can combine data from several catalogs in a single query. The example below combines the water board catalog (Rijnland legger) with the [Portolan NL](https://source.coop/cholmes/portolan-nl) catalog (PDOK data).
 
 **Q:** I have two Portolan catalogs: the water board legger at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json and Portolan NL (PDOK) at https://source.coop/cholmes/portolan-nl/catalog.json. Give the deepest watergangen (top 10) within the municipality of Leiden.
 
