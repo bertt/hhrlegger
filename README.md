@@ -9,7 +9,15 @@ This project recreates the original Esri map of Hoogheemraadschap van Rijnland (
 
 The catalog is built with [Portolan](https://github.com/portolan-sdi/portolan-cli) and published to Azure Blob Storage.
 
-### 1. Initialize the catalog
+### 1. Install and initialize the catalog
+
+Install Portolan CLI v0.8:
+
+```bash
+pip install portolan-cli==0.8.0
+```
+
+Then initialize:
 
 ```bash
 portolan init
