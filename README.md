@@ -20,6 +20,15 @@ This document walks through the following steps:
 5. Push the catalog to Azure Blob Storage.
 6. Use the result: the published PMTiles, styles and GeoParquet files, and the MapLibre demo.
 
+## History of Portolan
+
+Portolan is created by Chris Holmes (Cloud-Native Geospatial Foundation) with the idea of an SDI (Spatial Data Infrastructure) as "files in a bucket": cloud native formats plus STAC metadata on object storage, without servers. See [Portolan's origin story](https://latlong.blog/2026/09/portolans-origin-story-as-told-by-creator-chris-holmes.html).
+
+- Current version: Portolan CLI 0.8 (pre-1.0, breaking changes are possible).
+- Planned: version 1.0 in December.
+
+Project site: https://www.portolan-sdi.org/
+
 ## Catalog preparation
 
 The catalog is built with [Portolan](https://github.com/portolan-sdi/portolan-cli) and published to Azure Blob Storage.
