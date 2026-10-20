@@ -107,7 +107,7 @@ The basemap is provided by [OpenFreeMap](https://openfreemap.org/).
 Portolan catalogs can also be used in desktop GIS:
 
 - QGIS: [Portolan Registry plugin](https://github.com/portolan-sdi/portolan-registry-qgis) (browse catalogs, add PMTiles and GeoParquet layers)
-- GeoLibre: [GeoLibre plugins](https://plugins.geolibre.app/) (see the plugin marketplace for Portolan support)
+- GeoLibre: [GeoLibre](https://geolibre.app/) (version 3 and up) has a built-in Portolan catalog browser, no plugin needed
 
 ## OGC status of the formats
 
