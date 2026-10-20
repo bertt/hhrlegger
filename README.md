@@ -132,3 +132,5 @@ Source: [Portolan registry](https://www.portolan-sdi.org/registry)
 ## Conclusion
 
 With Portolan, a map with your own data (sourced from WFS, WMS or ArcGIS) can be run without the hosting, maintenance and license costs of databases and application servers. The data is converted to cloud native formats and deployed to S3-compatible blob storage, which serves it as static files. The only remaining cost is cheap blob storage.
+
+The result serves both humans (maps in the browser via PMTiles and MapLibre) and AI agents (GeoParquet, STAC metadata and `AGENTS.md`).
