@@ -1,6 +1,10 @@
 # hhrlegger
 
-- HHR legger - oppervlaktewateren: https://bertt.github.io/hhrlegger/oppervlaktewateren/
+This project recreates the original Esri map of Hoogheemraadschap van Rijnland (HHR) with open tooling (Portolan catalog, PMTiles, MapLibre).
+
+- Original Esri map: https://rijnland.maps.arcgis.com/apps/instant/sidebar/index.html?appid=f0fd839278474fe7841a12800fcc3e39
+- HHR legger - oppervlaktewateren (recreated): https://bertt.github.io/hhrlegger/oppervlaktewateren/
+
 ## Catalog preparation
 
 The catalog is built with [Portolan](https://github.com/portolan-sdi/portolan-cli) and published to Azure Blob Storage.
