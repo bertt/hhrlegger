@@ -46,7 +46,7 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 The catalog is available at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
 
-- Browse: https://browser.moregeo.it/external/flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/collection.json
+- Browse: https://browser.moregeo.it/external/flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
 - Or clone the catalog:
 
 ```bash
