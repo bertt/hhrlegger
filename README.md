@@ -85,5 +85,7 @@ portolan clone https://flatgeobuf.blob.core.windows.net/hhrlegger
 
 MapLibre demo: https://bertt.github.io/hhrlegger/oppervlaktewateren/
 
+<img width="800" height="469" alt="image" src="https://github.com/user-attachments/assets/5dd45ef5-6db2-441f-b3f7-4c269c522e00" />
+
 The demo contains links to the PMTiles files and the style JSON files (`styles/default.json`) published in the catalog (see the Result table above).
 
