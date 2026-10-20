@@ -155,6 +155,35 @@ The catalog is designed to be queried by AI agents as well.
 - An agent starts at the catalog URL (`https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`), follows the STAC links, reads the relevant `AGENTS.md` and queries the GeoParquet directly over HTTP with a tool such as DuckDB.
 - Ready-made agent skills for Portolan catalogs: [portolan-skills](https://github.com/portolan-sdi/portolan-skills).
 
+Point your agent at the `AGENTS.md` before asking it to query the data.
+
+### Example: dimensions of watergangen near a location
+
+All layers are in EPSG:28992 (RD New, meters), so `ST_Point(x, y)` takes RD coordinates and distances are in meters. This query returns the width, depth and bottom width of all watergangen within 100 m of a point in central Leiden:
+
+```sql
+INSTALL spatial; LOAD spatial;
+
+SELECT CODE, NAAM,
+       BREEDTE      AS breedte_m,
+       WATERDIEPTE  AS diepte_m,
+       BODEMBREEDTE AS bodembreedte_m,
+       round(ST_Distance(geometry, ST_Point(93900, 463500))) AS afstand_m
+FROM read_parquet('https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet')
+WHERE ST_DWithin(geometry, ST_Point(93900, 463500), 100)
+ORDER BY afstand_m;
+```
+
+| CODE | NAAM | breedte_m | diepte_m | bodembreedte_m | afstand_m |
+|---|---|---:|---:|---:|---:|
+| 448-058-00086 | Nieuwe Rijn | 17.27 | 2.5 | 9.77 | 27 |
+| 448-058-00079 | Steenschuur | 13.81 | 0.75 | 9.31 | 65 |
+
+Notes:
+
+- Starting from lon/lat? Convert first: `ST_Transform(ST_Point(lon, lat), 'EPSG:4326', 'EPSG:28992', always_xy := true)`.
+- `BREEDTE` and `WATERDIEPTE` can be null for some segments.
+- Change the `100` to widen or narrow the search radius.
 ## Other Dutch Portolan catalogs
 
 Source: [Portolan registry](https://www.portolan-sdi.org/registry)
