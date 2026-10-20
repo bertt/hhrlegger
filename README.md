@@ -162,7 +162,7 @@ copilot plugin install portolan@portolan-skills
 uv tool install portolan-cli
 ```
 
-Point your agent at the `AGENTS.md` before asking it to query the data.
+Point your agent at the `catalog.json` before asking it to query the data.
 
 ### Example
 
