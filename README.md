@@ -1,4 +1,4 @@
-# hhrlegger
+# Open and Serverless Waterboard Legger: STAC, GeoParquet, PMTiles, and MapLibre
 
 ## Introduction
 
