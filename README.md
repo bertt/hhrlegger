@@ -17,8 +17,9 @@ This document walks through the following steps:
 2. Extract the layers from the ArcGIS MapServer (the source data).
 3. Add PMTiles (vector tiles) for each layer.
 4. Generate human readable documentation for each layer.
-5. Push the catalog to Azure Blob Storage.
-6. Use the result: the published PMTiles, styles and GeoParquet files, and the MapLibre demo.
+5. Fill the `AGENTS.md` files with an AI tool.
+6. Push the catalog to Azure Blob Storage.
+7. Use the result: the published PMTiles, styles and GeoParquet files, and the MapLibre demo.
 
 ## History of Portolan
 
@@ -81,7 +82,18 @@ Run `portolan readme` in the catalog root. It creates human readable docs for ea
 portolan readme
 ```
 
-### 5. Push
+### 5. Fill the AGENTS.md files
+
+Use an AI tool (e.g. GitHub Copilot CLI) to fill the `AGENTS.md` files. Each data layer ships with an `AGENTS.md` next to its Parquet file (e.g. `watergang_as/AGENTS.md`), plus one at the catalog root. It is a machine-readable guide written for LLMs and coding agents, and it complements this README. It contains:
+
+- **Overview**: what the layer contains and when to use it
+- **Accessing the data**: working DuckDB/Python snippets and the CRS
+- **Schema & field notes**: column meanings, coded values and opaque columns
+- **Data quality & usage notes**: nulls, quirks and caveats
+- **Example queries**: only queries that were actually run, with result excerpts
+- **Related collections**: join keys to the other layers
+
+### 6. Push
 
 ```bash
 cd leggers_legger_oppervlaktewater_vigerend
