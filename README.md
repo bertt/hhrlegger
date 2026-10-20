@@ -104,13 +104,19 @@ The demo contains links to the PMTiles files and the style JSON files (`styles/d
 
 The basemap is provided by [OpenFreeMap](https://openfreemap.org/).
 
+Portolan catalogs can also be used in desktop GIS:
+
+- QGIS: [Portolan Registry plugin](https://github.com/portolan-sdi/portolan-registry-qgis) (browse catalogs, add PMTiles and GeoParquet layers)
+- GeoLibre: [GeoLibre plugins](https://plugins.geolibre.app/) (see the plugin marketplace for Portolan support)
+
 ## OGC status of the formats
 
-| Format | Status | Note |
-|--------|--------|------|
-| [STAC](https://www.ogc.org/standards/stac/) | OGC Community Standard (published 2025) | Developed outside OGC, then endorsed as a Community Standard |
-| [GeoParquet](https://geoparquet.org/) | In progress: OGC GeoParquet SWG is working towards an OGC Encoding Standard | Version 1.0.0 released by the community in 2023; no adoption announcement verified yet |
-| [PMTiles](https://docs.protomaps.com/pmtiles/) | Not an OGC standard | Open community specification (Protomaps) |
+| Format | Status | Specification | Note |
+|--------|--------|---------------|------|
+| STAC | OGC Community Standard (published 2025) | [STAC spec](https://stacspec.org/en/about/stac-spec/) / [OGC 25-004](https://docs.ogc.org/cs/25-004/25-004.html) | Developed outside OGC, then endorsed as a Community Standard |
+| GeoParquet | In progress: OGC GeoParquet SWG is working towards an OGC Encoding Standard | [GeoParquet spec](https://github.com/opengeospatial/geoparquet) | Version 1.0.0 released by the community in 2023; no adoption announcement verified yet |
+| PMTiles | Not an OGC standard | [PMTiles v3 spec](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md) | Open community specification (Protomaps) |
+| Portolan | Not an OGC standard | [Portolan spec](https://github.com/portolan-sdi/portolan-spec) | Specification and best practices for Portolan SDI, built on STAC, GeoParquet and PMTiles |
 
 Status as of October 2026; check ogc.org for the latest.
 
