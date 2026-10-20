@@ -112,6 +112,13 @@ Note: the catalog is designed to be queried by AI agents as well. This is planne
 - It then queries the GeoParquet files directly over HTTP with a tool such as DuckDB (range requests, no server or download of the full file needed), for example `SELECT ... FROM 'https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet'`.
 - The agent answers the user's question from the query result.
 
+How does an agent know about a Portolan catalog and its format?
+
+- The user (or the agent's instructions) gives the catalog URL, e.g. `https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`.
+- The catalog follows the open STAC standard (`catalog.json` links to a `collection.json` per layer, whose assets point to the `.parquet`, `.pmtiles` and style files). Agents already know STAC, so they can navigate it by following the links.
+- The root `AGENTS.md` explains the catalog layout and how to query it (formats, URL patterns, tools to use), so no prior knowledge of Portolan is needed.
+- Optionally, the catalog URL and a pointer to `AGENTS.md` can be added to the agent's own instructions or skill, so it knows where to look.
+
 ## Other Dutch Portolan catalogs
 
 Source: [Portolan registry](https://www.portolan-sdi.org/registry)
