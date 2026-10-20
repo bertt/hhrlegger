@@ -91,3 +91,6 @@ The demo contains links to the PMTiles files and the style JSON files (`styles/d
 
 The basemap is provided by [OpenFreeMap](https://openfreemap.org/).
 
+## Conclusion
+
+With Portolan, a map with your own data (sourced from WFS, WMS or ArcGIS) can be run without the hosting, maintenance and license costs of databases and application servers. The data is converted to cloud native formats and deployed to S3-compatible blob storage, which serves it as static files. The only remaining cost is cheap blob storage.
