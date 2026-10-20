@@ -188,6 +188,50 @@ ORDER BY afstand_m
 LIMIT 5;
 ```
 
+### Federated query
+
+Because every catalog publishes GeoParquet in the same CRS (EPSG:28992), an agent can combine data from several catalogs in a single query. The example below combines the water board catalog (Rijnland legger) with the [Portolan NL](https://source.coop/cholmes/portolan-nl) catalog (PDOK data).
+
+**Q:** I have two Portolan catalogs: the water board legger at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json and Portolan NL (PDOK) at https://source.coop/cholmes/portolan-nl/catalog.json. Give the deepest watergangen (top 10) within the municipality of Leiden.
+
+**A:** The municipality boundary of Leiden comes from Portolan NL (`kadaster/bestuurlijke_gebieden/gemeentegebied.parquet`), the water depth (`WATERDIEPTE`) from the legger (`watergang_as`). The three deepest are stretches of the Rijn (6.0 m), followed by Galgewater and Korte Vlietkanaal (3.5 m). These are the required depths according to the legger, not measured depths.
+
+Query used:
+
+```sql
+INSTALL spatial; LOAD spatial;
+
+-- PDOK catalog: boundary of Leiden
+CREATE TEMP TABLE gem AS
+SELECT geom g
+FROM read_parquet('https://data.source.coop/cholmes/portolan-nl/kadaster/bestuurlijke_gebieden/gemeentegebied.parquet')
+WHERE naam = 'Leiden';
+
+-- Water board catalog: deepest watergangen intersecting Leiden
+SELECT a.CODE, a.NAAM, a.WATERDIEPTE, round(a.LENGTE) AS lengte_m
+FROM read_parquet('https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet') a, gem
+WHERE ST_Intersects(a.geometry, gem.g)
+ORDER BY a.WATERDIEPTE DESC
+LIMIT 10;
+```
+
+Result:
+
+| CODE | NAAM | WATERDIEPTE (m) | lengte_m |
+|------|------|----------------:|---------:|
+| 448-058-00135 | Rijn (traject Korte Vlietkanaal - Additionele kanaal) | 6.0 | 757 |
+| 448-058-00643 | Rijn (traject Korte Vlietkanaal - Additionele kanaal) | 6.0 | 770 |
+| 448-058-00162 | Rijn (traject Korte Vlietkanaal - Additionele kanaal) | 6.0 | 127 |
+| 448-058-00200 | Galgewater | 3.5 | 224 |
+| 448-058-00051 | Korte Vlietkanaal | 3.5 | 114 |
+| 448-058-00022 | Galgewater | 3.5 | 190 |
+| 449-058-02200 | Korte Vlietkanaal | 3.5 | 450 |
+| 449-058-00054 | Korte Vlietkanaal | 3.5 | 1511 |
+| 448-058-00024 | Rijn (traject Galgewater - Korte Vlietkanaal) | 3.5 | 1620 |
+| 448-058-00198 | Rijn (traject Galgewater - Korte Vlietkanaal) | 3.5 | 58 |
+
+`ST_Intersects` also returns segments that cross the municipal boundary. Use `ST_Intersection` or `ST_Within` to keep only the parts inside Leiden.
+
 ## Other Dutch Portolan catalogs
 
 Source: [Portolan registry](https://www.portolan-sdi.org/registry)
