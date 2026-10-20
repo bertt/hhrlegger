@@ -165,33 +165,30 @@ uv tool install portolan-cli
 
 Point your agent at the `AGENTS.md` before asking it to query the data.
 
-### Example: dimensions of watergangen near a location
+### Example
 
-All layers are in EPSG:28992 (RD New, meters), so `ST_Point(x, y)` takes RD coordinates and distances are in meters. This query returns the width, depth and bottom width of all watergangen within 100 m of a point in central Leiden:
+**Q:** I have a Portolan catalog of the water board at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json and I want to know the water depth of the watergang at 93900, 463500
+
+**A:** The nearest watergang to RD (93900, 463500) is the Nieuwe Rijn (code 448-058-00086, in Leiden), about 27 m away.
+
+- Water depth: 2.5 m
+- Width: 17.27 m
+- Bottom width: 9.77 m
+- Status: Vastgesteld
+
+The point does not lie exactly on the watergang. The next candidate is the Steenschuur at 65 m, with a water depth of 0.75 m. If your point is actually on that canal, 0.75 m applies. The values come from the legger (`watergang_as`). This is the required depth according to the legger, not a measured depth.
+
+Query used:
 
 ```sql
-INSTALL spatial; LOAD spatial;
-
-SELECT CODE, NAAM,
-       BREEDTE      AS breedte_m,
-       WATERDIEPTE  AS diepte_m,
-       BODEMBREEDTE AS bodembreedte_m,
-       round(ST_Distance(geometry, ST_Point(93900, 463500))) AS afstand_m
+SELECT CODE, NAAM, WATERDIEPTE, BREEDTE, BODEMBREEDTE,
+       STATUSLEGGERWATERSYSTEEM,
+       round(ST_Distance(geometry, ST_Point(93900, 463500)), 1) AS afstand_m
 FROM read_parquet('https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet')
-WHERE ST_DWithin(geometry, ST_Point(93900, 463500), 100)
-ORDER BY afstand_m;
+ORDER BY afstand_m
+LIMIT 5;
 ```
 
-| CODE | NAAM | breedte_m | diepte_m | bodembreedte_m | afstand_m |
-|---|---|---:|---:|---:|---:|
-| 448-058-00086 | Nieuwe Rijn | 17.27 | 2.5 | 9.77 | 27 |
-| 448-058-00079 | Steenschuur | 13.81 | 0.75 | 9.31 | 65 |
-
-Notes:
-
-- Starting from lon/lat? Convert first: `ST_Transform(ST_Point(lon, lat), 'EPSG:4326', 'EPSG:28992', always_xy := true)`.
-- `BREEDTE` and `WATERDIEPTE` can be null for some segments.
-- Change the `100` to widen or narrow the search radius.
 ## Other Dutch Portolan catalogs
 
 Source: [Portolan registry](https://www.portolan-sdi.org/registry)
