@@ -29,6 +29,12 @@ Portolan is created by Chris Holmes (Cloud-Native Geospatial Foundation) with th
 
 Project site: https://www.portolan-sdi.org/
 
+The name comes from the [portolan chart](https://en.wikipedia.org/wiki/Portolan_chart): the earliest known type of nautical charts, made in the late 13th and early 14th centuries in the Mediterranean region. Sailors used them to navigate between ports, a fitting name for a project that helps people find and navigate data.
+
+<img width="600" alt="Mediterranean portolan chart, 14th century" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Mediterranean_chart_fourteenth_century2.jpg/960px-Mediterranean_chart_fourteenth_century2.jpg" />
+
+*Mediterranean portolan chart, 14th century (Wikimedia Commons).*
+
 ## Catalog preparation
 
 The catalog is built with [Portolan](https://github.com/portolan-sdi/portolan-cli) and published to Azure Blob Storage.
