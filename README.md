@@ -75,7 +75,11 @@ portolan add watergang_vlak --pmtiles
 
 ### 4. Metadata
 
-Fill in `./portolan/metadata.yaml` for each layer, and in the catalog root.
+Run `portolan readme` in the catalog root. It creates human readable docs for each layer.
+
+```
+portolan readme
+```
 
 ### 5. Push
 
