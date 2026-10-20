@@ -9,6 +9,15 @@ The approach is cloud native geo: there are no servers or databases to run. All 
 - Original Esri map: https://rijnland.maps.arcgis.com/apps/instant/sidebar/index.html?appid=f0fd839278474fe7841a12800fcc3e39
 - HHR legger - oppervlaktewateren (recreated): https://bertt.github.io/hhrlegger/oppervlaktewateren/
 
+This document walks through the following steps:
+
+1. Install Portolan CLI and initialize a catalog.
+2. Extract the layers from the ArcGIS MapServer (the source data).
+3. Add PMTiles (vector tiles) for each layer.
+4. Fill in the metadata per layer and for the catalog.
+5. Push the catalog to Azure Blob Storage.
+6. Use the result: the published PMTiles, styles and GeoParquet files, and the MapLibre demo.
+
 ## Catalog preparation
 
 The catalog is built with [Portolan](https://github.com/portolan-sdi/portolan-cli) and published to Azure Blob Storage.
