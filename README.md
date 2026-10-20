@@ -102,6 +102,16 @@ The demo contains links to the PMTiles files and the style JSON files (`styles/d
 
 The basemap is provided by [OpenFreeMap](https://openfreemap.org/).
 
+## Querying the catalog with agents
+
+Note: the catalog is designed to be queried by AI agents as well. This is planned and not fully in place yet (see Todo).
+
+- Each collection publishes its data as GeoParquet and an `AGENTS.md` next to it (e.g. `watergang_as/AGENTS.md`), plus one at catalog level.
+- `AGENTS.md` describes, in plain language, what the catalog and each dataset contain: layers, attributes and their meaning, coordinate system, license and example queries.
+- An agent starts at `catalog.json`, reads the relevant `AGENTS.md` to understand the data, and picks the right collection.
+- It then queries the GeoParquet files directly over HTTP with a tool such as DuckDB (range requests, no server or download of the full file needed), for example `SELECT ... FROM 'https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet'`.
+- The agent answers the user's question from the query result.
+
 ## Other Dutch Portolan catalogs
 
 Source: [Portolan registry](https://www.portolan-sdi.org/registry)
