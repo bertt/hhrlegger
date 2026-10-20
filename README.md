@@ -153,15 +153,13 @@ The catalog is designed to be queried by AI agents as well.
 
 - Each collection publishes GeoParquet plus an `AGENTS.md` (e.g. `watergang_as/AGENTS.md`), and there is one at catalog level describing layers, attributes, CRS, license and example queries.
 - An agent starts at the catalog URL (`https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`), follows the STAC links, reads the relevant `AGENTS.md` and queries the GeoParquet directly over HTTP with a tool such as DuckDB.
-- Ready-made agent skills for Portolan catalogs: [portolan-skills](https://github.com/portolan-sdi/portolan-skills). To use them with GitHub Copilot CLI (requires [uv](https://docs.astral.sh/uv/)):
+- Optional: install the [portolan-skills](https://github.com/portolan-sdi/portolan-skills) for GitHub Copilot CLI (requires [uv](https://docs.astral.sh/uv/)). Other agents: see the [installation instructions](https://github.com/portolan-sdi/portolan-skills#installation).
 
 ```
 copilot plugin marketplace add portolan-sdi/portolan-skills
 copilot plugin install portolan@portolan-skills
 uv tool install portolan-cli
 ```
-
-  Start a new session (`/skills` lists the installed skills). `/portolan:reading-portolan` helps an agent use a catalog, `/portolan:portolan-bootstrap` builds one. For other agents, see the [installation instructions](https://github.com/portolan-sdi/portolan-skills#installation).
 
 Point your agent at the `AGENTS.md` before asking it to query the data.
 
