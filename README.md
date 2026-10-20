@@ -104,6 +104,16 @@ The demo contains links to the PMTiles files and the style JSON files (`styles/d
 
 The basemap is provided by [OpenFreeMap](https://openfreemap.org/).
 
+## OGC status of the formats
+
+| Format | Status | Note |
+|--------|--------|------|
+| [STAC](https://www.ogc.org/standards/stac/) | OGC Community Standard (published 2025) | Developed outside OGC, then endorsed as a Community Standard |
+| [GeoParquet](https://geoparquet.org/) | In progress: OGC GeoParquet SWG is working towards an OGC Encoding Standard | Version 1.0.0 released by the community in 2023; no adoption announcement verified yet |
+| [PMTiles](https://docs.protomaps.com/pmtiles/) | Not an OGC standard | Open community specification (Protomaps) |
+
+Status as of October 2026; check ogc.org for the latest.
+
 ## Querying the catalog with agents
 
 Note: the catalog is designed to be queried by AI agents as well. This is planned and not fully in place yet (see Todo).
