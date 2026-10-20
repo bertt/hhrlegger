@@ -2,6 +2,8 @@
 
 This project recreates the original Esri map of Hoogheemraadschap van Rijnland (HHR) with open tooling (Portolan catalog, PMTiles, MapLibre).
 
+The approach is cloud native geo: there are no servers or databases to run. All data (GeoParquet, PMTiles, styles, STAC catalog) is static files deployed on an S3-compatible blob store (Azure Blob Storage) and read directly by clients over HTTP range requests.
+
 - Original Esri map: https://rijnland.maps.arcgis.com/apps/instant/sidebar/index.html?appid=f0fd839278474fe7841a12800fcc3e39
 - HHR legger - oppervlaktewateren (recreated): https://bertt.github.io/hhrlegger/oppervlaktewateren/
 
