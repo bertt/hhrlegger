@@ -105,10 +105,11 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 The catalog is available at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
 
 - Browse: https://browser.moregeo.it/external/flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
-- Or clone the catalog:
+- Or clone the catalog, and pull to update an existing local catalog:
 
 ```bash
 portolan clone https://flatgeobuf.blob.core.windows.net/hhrlegger
+portolan pull https://flatgeobuf.blob.core.windows.net/hhrlegger/
 ```
 
 ### Result
