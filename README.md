@@ -60,6 +60,12 @@ portolan init
 portolan extract arcgis https://rijnland.enl-mcs.nl/arcgis/rest/services/Leggers/Legger_Oppervlaktewater_Vigerend/MapServer --license CC-BY-4.0 --auto
 ```
 
+Extracting from a WFS works the same way:
+
+```bash
+portolan extract wfs "https://<wfs-host>/<path>/wfs?request=GetCapabilities&apikey=<YOUR_API_KEY>" administrative --license CC-BY-4.0
+```
+
 ### 3. Add PMTiles
 
 Requires [tippecanoe](https://github.com/felt/tippecanoe) to be installed and available on the `PATH`.
