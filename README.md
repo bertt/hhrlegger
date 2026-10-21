@@ -159,7 +159,6 @@ The catalog is designed to be queried by AI agents as well.
 ```
 copilot plugin marketplace add portolan-sdi/portolan-skills
 copilot plugin install portolan@portolan-skills
-uv tool install portolan-cli
 ```
 
 Point your agent at the `catalog.json` before asking it to query the data.
