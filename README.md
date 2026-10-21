@@ -293,6 +293,32 @@ Source: [Portolan registry](https://www.portolan-sdi.org/registry)
 
 [Cloud Native Geospatial for Small Teams](https://mapscaping.com/podcast/cloud-native-geospatial-for-small-teams/) (Mapscaping podcast): the Utah Geological Survey moved from a traditional ArcGIS Server setup to Postgres and GeoServer, and then to a cloud-native pipeline built on GeoParquet, PMTiles, and a STAC catalog. Turning off two servers saved around $25K/yr.
 
+## Portolan data formats
+
+Portolan prescribes cloud-native formats per data type:
+
+| Data type | Format |
+|-----------|--------|
+| Vector | GeoParquet or PMTiles (required) |
+| Raster | Cloud Optimized GeoTIFF (COG) |
+| Point clouds | Cloud Optimized Point Cloud (COPC) |
+| Tabular (non-spatial) | Apache Parquet |
+
+## Portolan on GitHub
+
+The [portolan-sdi](https://github.com/portolan-sdi) organization hosts the tools and specifications for Cloud-Native Geospatial Spatial Data Infrastructure. The main repositories:
+
+| Repository | Description |
+|------------|-------------|
+| [portolan-cli](https://github.com/portolan-sdi/portolan-cli) | CLI tool for managing cloud-native geospatial data (used in this project) |
+| [portolan-spec](https://github.com/portolan-sdi/portolan-spec) | Specification and best practices for Portolan SDI |
+| [portolan-skills](https://github.com/portolan-sdi/portolan-skills) | Agent skills for working with Portolan catalogs |
+| [portolan-browser](https://github.com/portolan-sdi/portolan-browser) | Vue UI for browsing and searching static STAC catalogs and STAC APIs |
+| [portolan-registry](https://github.com/portolan-sdi/portolan-registry) | Unified registry for Portolan catalogs |
+| [portolan-registry-qgis](https://github.com/portolan-sdi/portolan-registry-qgis) | Browse and use data from the Portolan registry in QGIS |
+| [rashid](https://github.com/portolan-sdi/rashid) | Validator and linter for Portolan catalogs |
+| [portolan-catalog-template](https://github.com/portolan-sdi/portolan-catalog-template) | Template for a git-backed Portolan catalog |
+
 ## Community
 
 Questions about Portolan or cloud-native geospatial? Join the discussion in the [Cloud Native Geo Slack channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529).
