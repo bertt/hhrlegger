@@ -307,7 +307,7 @@ Source: [Portolan registry](https://www.portolan-sdi.org/registry)
 
 ## Portolan on GitHub
 
-The [portolan-sdi](https://github.com/portolan-sdi) organization hosts the tools and specifications for Cloud-Native Geospatial Spatial Data Infrastructure. The main repositories:
+The [portolan-sdi](https://github.com/portolan-sdi) organization (website: [portolan-sdi.org](https://www.portolan-sdi.org/)) hosts the tools and specifications for Cloud-Native Geospatial Spatial Data Infrastructure. The main repositories:
 
 | Repository | Description |
 |------------|-------------|
