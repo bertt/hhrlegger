@@ -449,7 +449,7 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 <img class="shot-img" src="/screenshots/portolan-browser.png" alt="The hhrlegger catalog in the Portolan browser" style="max-height:380px;width:auto;margin:0 auto;display:block" />
 
-<div class="source"><a href="https://browser.moregeo.it/external/flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json">Browse the catalog in the Portolan browser</a> · <a href="https://github.com/portolan-sdi/portolan-browser">portolan-browser</a></div>
+<div class="source"><a href="https://browser.portolan-sdi.org/#/external/flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json">Browse the catalog in the Portolan browser</a> · <a href="https://github.com/portolan-sdi/portolan-browser">portolan-browser</a></div>
 
 ---
 
@@ -457,7 +457,7 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 <img class="shot-img" src="/screenshots/portolan-browser-collection.png" alt="The watergang_as collection in the Portolan browser" style="max-height:400px;width:auto;margin:0 auto;display:block" />
 
-<div class="source">GeoParquet, categorical style and PMTiles assets, with README and AGENTS.md for people and agents</div>
+<div class="source"><a href="https://browser.portolan-sdi.org/#/external/flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/collection.json">Browse the collection in the Portolan browser</a> · GeoParquet, categorical style and PMTiles assets, with README and AGENTS.md for people and agents</div>
 
 ---
 
