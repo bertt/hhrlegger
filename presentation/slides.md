@@ -178,6 +178,21 @@ Content-Range: bytes 0-16383/48211904
 </div>
 
 ---
+
+# STAC catalog vs Portolan catalog
+
+| | STAC catalog | Portolan catalog |
+|---|---|---|
+| Name | **S**patio**T**emporal **A**sset **C**atalog | Not an acronym: named after medieval portolan charts (the site is portolan-**SDI**, Spatial Data Infrastructure) |
+| What | Specification for describing geospatial assets | STAC-based convention plus CLI for publishing cloud-native data |
+| Scope | Metadata only: catalog, collection, item, asset | Metadata, data formats, README, AGENTS.md, styles, validation |
+| Data formats | Any | GeoParquet, PMTiles, COG, and others, checked by `portolan check` |
+| Spec started | 2017 (first sprint in Boulder) | January 2026 |
+| Stable release | STAC 1.0.0 in May 2021 | Portolan CLI 0.8 (pre-1.0), 1.0 planned for December 2026 |
+
+<div class="source">Portolan builds on STAC: every Portolan catalog is a valid STAC catalog · <a href="https://stacspec.org/">stacspec.org</a> · <a href="https://www.portolan-sdi.org/">portolan-sdi.org</a></div>
+
+---
 layout: center
 class: text-center
 ---
