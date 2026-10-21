@@ -154,12 +154,6 @@ The catalog is designed to be queried by AI agents as well.
 
 - Each collection publishes GeoParquet plus an `AGENTS.md` (e.g. `watergang_as/AGENTS.md`), and there is one at catalog level describing layers, attributes, CRS, license and example queries.
 - An agent starts at the catalog URL (`https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`), follows the STAC links, reads the relevant `AGENTS.md` and queries the GeoParquet directly over HTTP with a tool such as DuckDB.
-- Optional: install the [portolan-skills](https://github.com/portolan-sdi/portolan-skills) for GitHub Copilot CLI (requires [uv](https://docs.astral.sh/uv/)). Other agents: see the [installation instructions](https://github.com/portolan-sdi/portolan-skills#installation).
-
-```
-copilot plugin marketplace add portolan-sdi/portolan-skills
-copilot plugin install portolan@portolan-skills
-```
 
 Point your agent at the `catalog.json` before asking it to query the data.
 
@@ -230,6 +224,38 @@ Result:
 | 448-058-00198 | Rijn (traject Galgewater - Korte Vlietkanaal) | 3.5 | 58 |
 
 `ST_Intersects` also returns segments that cross the municipal boundary. Use `ST_Intersection` or `ST_Within` to keep only the parts inside Leiden.
+
+## Portolan skills
+
+The [portolan-skills](https://github.com/portolan-sdi/portolan-skills) provide reusable workflows for working with Portolan catalogs. Install them for GitHub Copilot CLI (requires [uv](https://docs.astral.sh/uv/)):
+
+```
+copilot plugin marketplace add portolan-sdi/portolan-skills
+copilot plugin install portolan@portolan-skills
+```
+
+Other agents: see the [installation instructions](https://github.com/portolan-sdi/portolan-skills#installation).
+
+| Skill | Purpose |
+|-------|---------|
+| `portolan-cli` | Publish and manage catalogs (init, add, check, push, pull, sync, partitioning, format conversion) |
+| `portolan-bootstrap` | Build a complete, documented catalog from a data source (open data portal, ArcGIS/WFS service, folder of files) |
+| `reading-portolan` | Explore, query, and visualize catalog data (DuckDB, GeoParquet, COGs, PMTiles/MapLibre maps) |
+| `portolan-migrate` | Bring an existing non-compliant catalog up to spec |
+| `git-backed-catalog` | Maintain a catalog in git with CI validation |
+| `enrich-metadata` | Fill `metadata.yaml` from an open data portal record |
+| `portolan-thumbnails` | Generate framed collection thumbnails (requires Node.js 24.12+) |
+| `catalog-grader` | Score a published catalog from A (best) to F (worst) with evidence gathered by `catalog-grader/scripts/collect_facts.py` |
+| `register-catalog` | Submit a catalog to the registry |
+| `report-catalog-issue` | Open a feedback issue for a registered catalog |
+| `sourcecoop` | Upload data to Source Cooperative |
+| `customize-portolan-browser` | Build a publisher-branded catalog browser |
+
+### Usage examples
+
+- "Use `portolan-bootstrap` to publish the GeoPackages in `data/` as a Portolan catalog."
+- "Mirror this ArcGIS FeatureServer as a Portolan catalog: `<URL>`"
+- "Use `reading-portolan` to list the collections in `https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`."
 
 ## Other Dutch Portolan catalogs
 
