@@ -291,6 +291,29 @@ Other agents: see the [installation instructions](https://github.com/portolan-sd
 - "Mirror this ArcGIS FeatureServer as a Portolan catalog: `<URL>`"
 - "Use `reading-portolan` to list the collections in `https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`."
 
+## Versioning
+
+`portolan version` manages the versions of a collection. It works with any versioning backend (`file` or `iceberg`); the backend is auto-detected from the catalog configuration.
+
+| Command | Description | Backend |
+|---------|-------------|---------|
+| `portolan version bump <collection> <version>` | Create a new version from the current file state | all |
+| `portolan version current <collection>` | Show the current version | all |
+| `portolan version list <collection>` | List all versions | all |
+| `portolan version rollback <collection> <version>` | Roll back to a previous version | Iceberg only |
+| `portolan version prune <collection>` | Remove old versions, keeping the N most recent (default 5) | Iceberg only |
+
+`bump` detects modified files by comparing checksums and records a new version entry in `versions.json`. The version must be an explicit [semver](https://semver.org/) string. Add a note with `-m`, mark schema changes with `--breaking`, and skip the confirmation prompt with `-y`.
+
+```bash
+portolan version bump watergang_as 1.1.0 -m "Updated source data"
+portolan version bump watergang_as 2.0.0 --breaking -m "Schema change"
+portolan version current watergang_as
+portolan version list watergang_as --json
+```
+
+With the Iceberg backend, `rollback` uses native snapshot management to move the current snapshot pointer back to the target version, so no data is copied and it is instant. `prune --keep 3` removes old versions, and `--dry-run` previews what would be removed. All subcommands accept `--catalog` and `--json`.
+
 ## Other Dutch Portolan catalogs
 
 Source: [Portolan registry](https://www.portolan-sdi.org/registry)
