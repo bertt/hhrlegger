@@ -304,7 +304,19 @@ portolan add-external \
     --via "https://docs.overturemaps.org/guides/places/"
 ```
 
-This is meant for cloud-native files, not for live WFS or ArcGIS services. Those are converted to GeoParquet with `portolan extract`.
+This is meant for cloud-native files such as GeoParquet or PMTiles.
+
+A live WFS or ArcGIS service can technically be referenced the same way, because a STAC asset can point to any URL:
+
+```bash
+portolan add-external "https://<wfs-host>/<path>/wfs?service=WFS&request=GetCapabilities" \
+    --collection my-wfs \
+    --title "My WFS" \
+    --license CC-BY-4.0 \
+    --media-type application/xml
+```
+
+Note that this is not the standard Portolan way. Nothing is downloaded or converted, so the data is not cloud-native, and `portolan check` reports errors and warnings for it (for example missing `file:checksum`, `file:size` and `table:columns`) and defaults to a global bbox. The standard approach is to convert the service to GeoParquet with `portolan extract`.
 
 ## Versioning
 
