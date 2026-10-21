@@ -130,13 +130,23 @@ Content-Range: bytes 0-16383/48211904
 
 | Format | Used for | Why |
 |---|---|---|
+| <span class="hl">GeoParquet</span> | <span class="hl">Vector, analysis</span> | <span class="hl">Columnar, fast to query with DuckDB</span> |
+| <span class="hl">PMTiles</span> | <span class="hl">Map display</span> | <span class="hl">Single-file vector tiles, straight into MapLibre</span> |
+| <span class="hl">STAC</span> | <span class="hl">Catalog</span> | <span class="hl">Discoverability and structure across all assets</span> |
+| COG | Raster | Partial reads via range requests, with overviews |
+| COPC | Point clouds | LAZ with an octree index, stream only the points you need |
+| Parquet | Tabular data | Columnar, read only the columns and row groups you need |
+| FlatGeobuf | Vector, streaming | Spatial index, bbox queries without a server |
+
+<div class="source"><span class="hl">Highlighted</span>: the formats used in the use case of this presentation</div>
+
+---|---|---|
 | COG | Raster | Partial reads via range requests, with overviews |
 | COPC | Point clouds | LAZ with an octree index, stream only the points you need |
 | Parquet | Tabular data | Columnar, read only the columns and row groups you need |
 | GeoParquet | Vector, analysis | Columnar, fast to query with DuckDB |
 | FlatGeobuf | Vector, streaming | Spatial index, bbox queries without a server |
 | PMTiles | Map display | Single-file vector tiles, straight into MapLibre |
-| STAC | Catalog | Discoverability and structure across all assets |
 
 ---
 
@@ -214,7 +224,7 @@ The legal register of a waterschap that records the official shape and size of i
 </div>
 </div>
 
-<div class="source">rijnland.maps.arcgis.com · MapServer: Leggers/Legger_Oppervlaktewater_Vigerend</div>
+<div class="source"><a href="https://rijnland.maps.arcgis.com/apps/instant/sidebar/index.html?appid=f0fd839278474fe7841a12800fcc3e39">ArcGIS Online map</a> · MapServer: Leggers/Legger_Oppervlaktewater_Vigerend</div>
 
 ---
 
@@ -304,9 +314,26 @@ portolan init
 portolan extract arcgis https://rijnland.enl-mcs.nl/arcgis/rest/services/Leggers/Legger_Oppervlaktewater_Vigerend/MapServer --license CC-BY-4.0 --auto
 ```
 
-<div class="grid grid-cols-2 gap-6 mt-4">
-<div class="shot" style="min-height:180px">📷 Screenshot: terminal, portolan extract running<br>public/screenshots/extract-terminal.png</div>
-<div class="shot" style="min-height:180px">📷 Screenshot: resulting catalog folder (layers, parquet, styles)<br>public/screenshots/catalog-folder.png</div>
+<div class="grid grid-cols-1 gap-6 mt-4">
+<div class="card" style="font-size:0.7em">
+
+```text
+leggers_legger_oppervlaktewater_vigerend/
+├── catalog.json
+├── README.md · AGENTS.md
+├── .portolan/extraction-report.json
+├── watergang_as/
+│   ├── watergang_as.parquet
+│   ├── collection.json
+│   ├── styles/default.json
+│   └── README.md · AGENTS.md
+├── watergang_begroeiing/
+├── watergang_beschermingszone/
+├── watergang_kernzone/
+└── watergang_vlak/
+```
+
+</div>
 </div>
 
 <div class="card mt-4">
@@ -322,7 +349,7 @@ Query parameters are kept thanks to two pull requests:
 
 ---
 
-# Step 2: PMTiles per layer
+# Step 2: PMTiles with vector tiles per layer
 
 Requires [tippecanoe](https://github.com/felt/tippecanoe) on the `PATH`.
 
@@ -334,7 +361,16 @@ portolan add watergang_kernzone --pmtiles
 portolan add watergang_vlak --pmtiles
 ```
 
-<div class="shot mt-4">📷 Screenshot: terminal, portolan add --pmtiles (or file sizes of parquet vs pmtiles)<br>public/screenshots/add-pmtiles.png</div>
+<div class="card mt-4" style="font-size:0.7em">
+<pre style="margin:0;background:none;font-family:monospace;line-height:1.5">watergang_as/
+├── watergang_as.parquet     24 MB
+├── <span class="hl" style="background:#fde68a;color:#7c2d12;padding:0 6px;border-radius:4px">watergang_as.pmtiles     36 MB   ← vector tiles</span>
+├── watergang_as.thumb.jpg
+├── collection.json
+├── versions.json
+├── styles/default.json
+└── README.md · AGENTS.md</pre>
+</div>
 
 ---
 
@@ -356,8 +392,8 @@ Filled with Copilot CLI: overview, DuckDB snippets, schema notes, quality notes,
 </div>
 
 <div class="grid grid-cols-2 gap-4 mt-4">
-<div class="shot tall">📷 Layer README.md<br>public/screenshots/readme.png</div>
-<div class="shot tall">📷 Layer AGENTS.md<br>public/screenshots/agents-md.png</div>
+<img class="shot-img" src="/screenshots/readme.png" alt="Layer README.md" style="height:340px;object-fit:cover;object-position:top" />
+<img class="shot-img" src="/screenshots/agents-md.png" alt="Layer AGENTS.md" style="height:340px;object-fit:cover;object-position:top" />
 </div>
 
 ---
@@ -369,8 +405,6 @@ portolan check
 ```
 
 <div class="lead">Powered by <b>rashid</b>, a validator and linter for Portolan catalogs. Validates STAC, links, assets and cloud-native formats. Fix the errors and warnings, check again, then push.</div>
-
-<div class="shot tall mt-4">📷 portolan check output<br>public/screenshots/check.png</div>
 
 ---
 
@@ -386,12 +420,10 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 <div class="card">
 
 - Uploads `catalog.json`, collections, items and data files as static files
-- Optimistic locking: refuses to overwrite a diverged remote without `--force`
-- `--dry-run`, `--collection`, `--workers`
 - Backends: S3 (and compatible), GCS, Azure Blob
 
 </div>
-<div class="shot">📷 Screenshot: Azure portal blob container or push output<br>public/screenshots/push.png</div>
+<img class="shot-img" src="/screenshots/azure-blob.png" alt="Azure blob container hhrlegger" />
 </div>
 
 <div class="source">Catalog: <a href="https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json">flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json</a></div>
@@ -400,32 +432,26 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 # The result: a catalog of static files
 
-| Layer | PMTiles | Style | GeoParquet | README | AGENTS |
-|---|---|---|---|---|---|
-| watergang_as | ✓ | ✓ | ✓ | ✓ | ✓ |
-| watergang_begroeiing | ✓ | ✓ | ✓ | ✓ | ✓ |
-| watergang_beschermingszone | ✓ | ✓ | ✓ | ✓ | ✓ |
-| watergang_kernzone | ✓ | ✓ | ✓ | ✓ | ✓ |
-| watergang_vlak | ✓ | ✓ | ✓ | ✓ | ✓ |
+<img class="shot-img" src="/screenshots/portolan-browser.png" alt="The hhrlegger catalog in the Portolan browser" style="max-height:380px;width:auto;margin:0 auto;display:block" />
 
-<div class="shot mt-4" style="min-height:220px">📷 Screenshot: Portolan browser showing the hhrlegger catalog<br>public/screenshots/portolan-browser.png</div>
-
-<div class="source">browser.moregeo.it · portolan-browser</div>
+<div class="source"><a href="https://browser.moregeo.it/external/flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json">Browse the catalog in the Portolan browser</a> · <a href="https://github.com/portolan-sdi/portolan-browser">portolan-browser</a></div>
 
 ---
 
-# ArcGIS Online vs MapLibre: side by side
+# watergang_as
 
-<div class="grid grid-cols-2 gap-4 mt-2">
-<div>
-<div class="shot tall">📷 Screenshot: ArcGIS Online map<br>public/screenshots/compare-arcgis.png</div>
-<div class="caption">Esri map (ArcGIS Server + licences)</div>
-</div>
-<div>
-<div class="shot tall">📷 Screenshot: MapLibre map<br>public/screenshots/compare-maplibre.png</div>
-<div class="caption">MapLibre + PMTiles (static files on blob storage)</div>
-</div>
-</div>
+<img class="shot-img" src="/screenshots/portolan-browser-collection.png" alt="The watergang_as collection in the Portolan browser" style="max-height:400px;width:auto;margin:0 auto;display:block" />
+
+<div class="source">GeoParquet, categorical style and PMTiles assets, with README and AGENTS.md for people and agents</div>
+
+---
+
+# Result: MapLibre map
+
+<img class="shot-img" src="/screenshots/maplibre-result.png" alt="MapLibre map with PMTiles from blob storage" style="max-height:400px;width:auto;margin:0 auto;display:block" />
+<div class="caption">MapLibre + PMTiles (static files on blob storage). Basemap: <a href="https://openfreemap.org">OpenFreeMap</a> tiles</div>
+
+<div class="mt-6 text-center" style="font-size:1.6em"><a href="https://bertt.github.io/hhrlegger/oppervlaktewateren/">Demo: bertt.github.io/hhrlegger/oppervlaktewateren</a></div>
 
 ---
 
@@ -439,10 +465,6 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 | Data access | Service-specific REST API | Open files over HTTP |
 | Styles | Esri-specific | MapLibre style JSON in the catalog |
 | AI agents | Hard to use reliably | STAC + AGENTS.md + GeoParquet |
-
-<div class="mt-6 text-center" style="font-size:1.6em"><a href="https://bertt.github.io/hhrlegger/oppervlaktewateren/">Demo: bertt.github.io/hhrlegger/oppervlaktewateren</a></div>
-
-<div class="source text-center">Basemap by OpenFreeMap</div>
 
 ---
 
@@ -463,10 +485,7 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 </div>
 </div>
 
-<div class="grid grid-cols-2 gap-6 mt-4">
-<div class="shot">📷 Screenshot: QGIS with the legger layers<br>public/screenshots/qgis.png</div>
-<div class="shot">📷 Screenshot: GeoLibre catalog browser<br>public/screenshots/geolibre.png</div>
-</div>
+<img class="shot-img mt-4" src="/screenshots/geolibre.png" alt="GeoLibre catalog browser" style="height:330px;width:auto;margin:1rem auto 0;display:block" />
 
 ---
 
@@ -474,41 +493,53 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 <div class="lead">Point an agent at <code>catalog.json</code>. It follows the STAC links, reads AGENTS.md and queries the GeoParquet over HTTP with DuckDB.</div>
 
-<div class="grid grid-cols-2 gap-6 mt-2">
-<div class="card">
-
-**Q:** What is the water depth of the watergang at RD 93900, 463500?
-
-**A:** Nearest is the Nieuwe Rijn (Leiden), 27 m away: depth 2.5 m, width 17.27 m, bottom width 9.77 m. Required depth per the legger, not measured.
-
-</div>
-<div class="shot">📷 Screenshot: Copilot CLI session answering the question<br>public/screenshots/agent-query.png</div>
+<div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:16px 22px;font-family:Consolas,monospace;font-size:0.5em;line-height:1.45;text-align:left;margin-top:8px">
+<pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">&gt;</span> I have a Portolan catalog of the water board at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
+  and I want to know the water depth of the watergang at 93900, 463500
+&nbsp;
+<span style="color:#d2a8ff">skill(reading-portolan)</span>
+<span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Fetch catalog (irm catalog.json, curl AGENTS.md)</span>
+<span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Read collection guide (watergang_as/AGENTS.md)</span>
+<span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Query nearest watergang (DuckDB spatial + httpfs on the parquet)</span>
+&nbsp;
+<span style="color:#fbbf24">The watergang at 93900, 463500 (RD New) has a legger water depth of 2.5 m.</span>
+&nbsp;
+It is the "Nieuwe Rijn" (CODE 448-058-00086), the only watergang within 50 m; its centre
+line lies about 27 m from your point. Width 17.27 m, bottom width 9.77 m, status "Vastgesteld".
+&nbsp;
+<span style="color:#8b949e">WATERDIEPTE is the required legger depth, not a measured one.
+Source: watergang_as, CC-BY-4.0 (Hoogheemraadschap van Rijnland).</span></pre>
 </div>
 
 ---
 
 # Federated query across two catalogs
 
-<div class="grid grid-cols-2 gap-6 mt-2">
-<div>
-
-**Q:** Deepest 10 watergangen in the municipality of Leiden?
-
-```sql
-CREATE TEMP TABLE gem AS
-SELECT geom g FROM read_parquet(
- 'https://data.source.coop/cholmes/portolan-nl/kadaster/bestuurlijke_gebieden/gemeentegebied.parquet')
-WHERE naam = 'Leiden';
-
-SELECT a.CODE, a.NAAM, a.WATERDIEPTE
-FROM read_parquet(
- 'https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet') a, gem
-WHERE ST_Intersects(a.geometry, gem.g)
-ORDER BY a.WATERDIEPTE DESC LIMIT 10;
-```
-
-</div>
-<div class="shot tall">📷 Screenshot: result table (Rijn 6.0 m, Galgewater 3.5 m, ...)<br>public/screenshots/federated.png</div>
+<div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:12px 20px;font-family:Consolas,monospace;font-size:0.5em;line-height:1.3;text-align:left;margin-top:6px">
+<pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">&gt;</span> I have two Portolan catalogs: the water board legger at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
+  and Portolan NL (PDOK) at https://source.coop/cholmes/portolan-nl/catalog.json.
+  Give the deepest watergangen (top 10) within the municipality of Leiden.
+&nbsp;
+<span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Fetch PDOK catalog, explore kadaster and cbs</span>
+<span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Read municipality collection guide (bestuurlijke_gebieden/AGENTS.md)</span>
+<span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Top 10 deepest watergangen in Leiden (DuckDB spatial join over HTTP)</span>
+&nbsp;
+<span style="color:#fbbf24">Top 10 deepest watergang segments in Leiden, by legger WATERDIEPTE (m):</span>
+&nbsp;
+ #   CODE            Name                                          Depth  Width  Length
+ 1   448-058-00135   Rijn (Korte Vlietkanaal–Additionele kanaal)   6.0    59.2   757
+ 2   448-058-00643   Rijn (same section)                           6.0    44.0   770
+ 3   448-058-00162   Rijn (same section)                           6.0    32.3   127
+ 4   448-058-00198   Rijn (Galgewater–Korte Vlietkanaal)           3.5    54.8   58
+ 5   448-058-00024   Rijn (Galgewater–Korte Vlietkanaal)           3.5    53.4   1620
+ 6   448-058-00200   Galgewater                                    3.5    40.7   224
+ 7   449-058-02200   Korte Vlietkanaal                             3.5    34.4   450
+ 8   449-058-00054   Korte Vlietkanaal                             3.5    32.8   1511
+ 9   448-058-00022   Galgewater                                    3.5    24.8   190
+10   448-058-00051   Korte Vlietkanaal                             3.5    22.0   114
+&nbsp;
+<span style="color:#8b949e">Leiden boundary from PDOK (bestuurlijke_gebieden/gemeentegebied); watergang_as lines intersecting it,
+excluding "Verwijderd" and null depths. Both layers EPSG:28992. Many segments tie at 3.5 m (ranks 4–10: cut by width).</span></pre>
 </div>
 
 <div class="source">Boundaries from Portolan NL (PDOK), depths from the HHR legger</div>
@@ -542,7 +573,17 @@ portolan version list watergang_as --json
 - Iceberg only: `rollback` (instant, no data copied) and `prune --keep N`
 
 </div>
-<div class="shot tall">📷 Screenshot: portolan version list output / versions.json<br>public/screenshots/versioning.png</div>
+<div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:14px 18px;font-family:Consolas,monospace;font-size:0.5em;line-height:1.45;text-align:left">
+<pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">$</span> portolan version list watergang_as
+&nbsp;
+<span style="color:#7ee787">→</span> Versions for 'watergang_as' (2 total):
+&nbsp;
+<span style="color:#7ee787">→</span>   <span style="color:#fbbf24">1.0.0</span>  2026-10-21 12:43:44
+      watergang_as.parquet
+<span style="color:#7ee787">→</span>   <span style="color:#fbbf24">1.0.1</span>  2026-10-21 12:53:13 — Generated PMTiles and thumbnail: watergang_as.pmtiles, watergang_as.thumb.jpg
+      watergang_as.pmtiles
+      watergang_as.thumb.jpg</pre>
+</div>
 </div>
 
 ---
@@ -568,34 +609,28 @@ copilot plugin install portolan@portolan-skills
 | `register-catalog` | Submit to the registry |
 
 </div>
-<div class="shot">📷 Screenshot: Copilot CLI using portolan-bootstrap<br>public/screenshots/skills.png</div>
-</div>
+<div class="card" style="font-size:0.75em">
 
-<div class="source">More: portolan-migrate, git-backed-catalog, enrich-metadata, portolan-thumbnails, report-catalog-issue, sourcecoop, customize-portolan-browser</div>
+**Example prompts**
 
----
-
-# Skills: example prompts
-
-<div class="cards c3">
-<div class="card">
-
-“Use `portolan-bootstrap` to publish the GeoPackages in `data/` as a Portolan catalog.”
-
-</div>
-<div class="card">
-
-“Mirror this ArcGIS FeatureServer as a Portolan catalog: `<URL>`”
-
-</div>
-<div class="card">
-
-“Use `reading-portolan` to list the collections in `.../hhrlegger/catalog.json`.”
+- “Use `portolan-bootstrap` to publish the GeoPackages in `data/` as a Portolan catalog.”
+- “Mirror this ArcGIS FeatureServer as a Portolan catalog: `<URL>`”
+- “Use `reading-portolan` to list the collections in `.../hhrlegger/catalog.json`.”
 
 </div>
 </div>
 
-<div class="shot mt-4">📷 Screenshot: catalog-grader report for the hhrlegger catalog<br>public/screenshots/catalog-grader.png</div>
+<div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:10px 20px;font-family:Consolas,monospace;font-size:0.45em;line-height:1.35;text-align:left;margin-top:8px">
+<pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">&gt;</span> Grade the catalog at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
+<span style="color:#d2a8ff">skill(catalog-grader)</span>
+<span style="color:#fbbf24">Catalog grade: D</span>  <span style="color:#8b949e">(rashid reports 8 errors, which caps the grade at D)</span>
+ 1. No provider with the producer role in all 5 collections
+ 2. Storage host: Accept-Ranges and CORS headers missing
+ 3. 5 broken links in the root README (404)
+ 4. 11 of 20 documented code blocks fail</pre>
+</div>
+
+<div class="source">More skills: portolan-migrate, git-backed-catalog, enrich-metadata, portolan-thumbnails, report-catalog-issue, sourcecoop, customize-portolan-browser</div>
 
 ---
 
@@ -604,7 +639,7 @@ copilot plugin install portolan@portolan-skills
 <div class="grid grid-cols-[1fr_2fr] gap-8 items-center mt-2">
 <div>
   <div class="big">85</div>
-  <div class="lead">catalogs tracked, last checked 15 Oct 2026</div>
+  <div class="lead">catalogs tracked, last checked 21 Oct 2026</div>
 </div>
 <div>
 
@@ -614,7 +649,7 @@ Catalogs from many publishers become searchable in one place, while the data sta
 </div>
 </div>
 
-<div class="shot mt-4">📷 Screenshot: Portolan registry<br>public/screenshots/registry.png</div>
+<img class="shot-img mt-4" src="/screenshots/registry.png" alt="Portolan registry" style="height:300px;width:auto;margin:1rem auto 0;display:block" />
 
 <div class="source"><a href="https://www.portolan-sdi.org/registry">portolan-sdi.org/registry</a></div>
 
@@ -628,25 +663,9 @@ Catalogs from many publishers become searchable in one place, while the data sta
 | Studio Bereikbaar Data Lab | NWB |
 | Gemeente Utrecht | By Bert Temme |
 
-<div class="grid grid-cols-2 gap-6 mt-2">
-<div class="shot">📷 Screenshot: Portolan NL on source.coop<br>public/screenshots/portolan-nl.png</div>
-<div class="shot">📷 Screenshot: Utrecht catalog in the browser<br>public/screenshots/utrecht.png</div>
-</div>
+<img class="shot-img mt-2" src="/screenshots/portolan-nl.png" alt="Portolan NL on source.coop" style="height:300px;width:auto;margin:0.5rem auto 0;display:block" />
 
 <div class="source">Source: <a href="https://www.portolan-sdi.org/registry">portolan-sdi.org/registry</a></div>
-
----
-
-# OGC status of the formats
-
-| Format | Status |
-|---|---|
-| STAC | OGC Community Standard (2025) |
-| GeoParquet | OGC GeoParquet SWG working towards an Encoding Standard |
-| PMTiles | Not an OGC standard, open community spec (Protomaps) |
-| Portolan | Not an OGC standard, built on STAC, GeoParquet and PMTiles |
-
-<div class="source">Status as of October 2026; check ogc.org for the latest.</div>
 
 ---
 

@@ -93,3 +93,5 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.hl { color: var(--amber); font-weight: 700; }
