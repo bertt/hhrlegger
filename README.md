@@ -66,6 +66,11 @@ Extracting from a WFS works the same way:
 portolan extract wfs "https://<wfs-host>/<path>/wfs?request=GetCapabilities&apikey=<YOUR_API_KEY>" administrative --license CC-BY-4.0
 ```
 
+Query parameters such as an API key are supported through these pull requests:
+
+- [portolan-sdi/portolan-cli#911](https://github.com/portolan-sdi/portolan-cli/pull/911): fix(extract): keep original query params in WMS style/legend URLs
+- [geoparquet/geoparquet-io#836](https://github.com/geoparquet/geoparquet-io/pull/836): fix(wfs): keep existing query params (e.g. apikey) when building WFS GetFeature URLs
+
 ### 3. Add PMTiles
 
 Requires [tippecanoe](https://github.com/felt/tippecanoe) to be installed and available on the `PATH`.
