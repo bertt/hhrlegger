@@ -245,7 +245,7 @@ Other agents: see the [installation instructions](https://github.com/portolan-sd
 | `git-backed-catalog` | Maintain a catalog in git with CI validation |
 | `enrich-metadata` | Fill `metadata.yaml` from an open data portal record |
 | `portolan-thumbnails` | Generate framed collection thumbnails (requires Node.js 24.12+) |
-| `catalog-grader` | Grade a published catalog from A+ to F with evidence |
+| `catalog-grader` | Score a published catalog from A (best) to F (worst) with evidence gathered by `catalog-grader/scripts/collect_facts.py` |
 | `register-catalog` | Submit a catalog to the registry |
 | `report-catalog-issue` | Open a feedback issue for a registered catalog |
 | `sourcecoop` | Upload data to Source Cooperative |
