@@ -124,6 +124,18 @@ export AZURE_STORAGE_ACCOUNT_KEY=<your-azure-storage-account-key>
 portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 ```
 
+`portolan push` uploads the local catalog (STAC `catalog.json`, collections, items and data files) to cloud object storage as static files. It uses optimistic locking to detect concurrent changes on the remote and refuses to overwrite a diverged remote unless you pass `--force`. Use `--dry-run` to see what would be uploaded, `--collection` to push a single collection, and `--workers` to upload in parallel.
+
+Supported backends:
+
+| Backend | Destination URL | Credentials |
+|---------|-----------------|-------------|
+| Amazon S3 (and S3-compatible storage) | `s3://bucket/path` | AWS credentials or `--profile` |
+| Google Cloud Storage | `gs://bucket/path` | Google Cloud credentials |
+| Azure Blob Storage | `https://<account>.blob.core.windows.net/container/` | `AZURE_STORAGE_ACCOUNT_KEY` |
+
+The destination can also be set once with the `PORTOLAN_REMOTE` environment variable or in a `.env` file.
+
 The catalog is available at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
 
 - Browse: https://browser.moregeo.it/external/flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
