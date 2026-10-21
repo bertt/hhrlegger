@@ -1,0 +1,95 @@
+:root {
+  --navy: #123a63;
+  --card: #1a4d80;
+  --card-border: #2d6aa3;
+  --amber: #e8a33d;
+  --cream: #f4f1ea;
+  --muted: #c9d3dc;
+}
+
+.slidev-layout {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.slidev-layout h1,
+.slidev-layout h2 {
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.slidev-layout h3 {
+  color: var(--amber);
+  font-weight: 700;
+  margin: 0 0 0.4em;
+}
+
+.slidev-layout.cover h1 {
+  font-size: 3.2em;
+  line-height: 1.05;
+}
+
+.eyebrow {
+  color: var(--amber);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.9em;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.05em;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.cards.c2 { grid-template-columns: 1fr 1fr; }
+.cards.c3 { grid-template-columns: repeat(3, 1fr); }
+.cards.c4 { grid-template-columns: repeat(4, 1fr); }
+.cards.c5 { grid-template-columns: repeat(5, 1fr); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  font-size: 0.85em;
+}
+.card p { margin: 0; }
+
+.step {
+  color: var(--amber);
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.source {
+  color: var(--muted);
+  font-size: 0.65em;
+  margin-top: 1rem;
+}
+
+.slidev-layout table { width: 100%; font-size: 0.85em; }
+.slidev-layout th { color: var(--amber); }
+.slidev-layout td, .slidev-layout th { border-color: var(--card-border); }
+
+.slidev-layout code, .slidev-layout pre { font-size: 0.8em; }
+
+.big { font-size: 4em; font-weight: 700; color: var(--amber); line-height: 1; }
+.diagram { background: var(--cream); border-radius: 12px; padding: 0.5rem; }
+
+.shot { border: 2px dashed var(--amber); border-radius: 12px; min-height: 300px; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.8em; text-align: center; padding: 1rem; }
+.shot.tall { min-height: 380px; }
+.shot-img { border-radius: 12px; border: 1px solid var(--card-border); width: 100%; }
+.caption { color: var(--muted); font-size: 0.65em; margin-top: 0.3rem; text-align: center; }
+
+.slidev-layout.default, .slidev-layout.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

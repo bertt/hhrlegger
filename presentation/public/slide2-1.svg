@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Diagram: PostGIS database connects via SQL to OGC services (WFS, WMS), which connect via HTTP to clients" viewBox="0 0 1664 540" width="1664" height="540" font-family="Helvetica Neue, Arial, sans-serif">
+<rect x="0" y="20" width="440" height="300" rx="20" fill="#1a4d80" stroke="#2d6aa3" stroke-width="2"/>
+<rect x="612" y="20" width="440" height="300" rx="20" fill="#1a4d80" stroke="#2d6aa3" stroke-width="2"/>
+<rect x="1224" y="20" width="440" height="300" rx="20" fill="#1a4d80" stroke="#2d6aa3" stroke-width="2"/>
+<text x="220" y="85" text-anchor="middle" font-size="44" font-weight="700" fill="#f4f1ea">Database</text>
+<text x="220" y="132" text-anchor="middle" font-size="34" font-weight="700" fill="#f2b24d">SQL databases</text><rect x="20" y="150" width="190" height="52" rx="12" fill="#14202b"/><rect x="230" y="150" width="190" height="52" rx="12" fill="#14202b"/><rect x="20" y="212" width="400" height="52" rx="12" fill="#14202b"/><text x="115" y="187" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">PostGIS</text><text x="325" y="187" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">Oracle</text><text x="220" y="249" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">SQL Server</text>
+
+<text x="220" y="304" text-anchor="middle" font-size="26" fill="#c9d3dc">Tables and spatial indexes</text>
+<text x="832" y="85" text-anchor="middle" font-size="44" font-weight="700" fill="#f4f1ea">OGC services</text>
+<text x="832" y="132" text-anchor="middle" font-size="34" font-weight="700" fill="#f2b24d">WFS · WMS</text><rect x="632" y="150" width="190" height="52" rx="12" fill="#14202b"/><rect x="842" y="150" width="190" height="52" rx="12" fill="#14202b"/><rect x="632" y="212" width="400" height="52" rx="12" fill="#14202b"/><text x="727" y="187" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">GeoServer</text><text x="937" y="187" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">MapServer</text><text x="832" y="249" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">ArcGIS Server</text>
+
+<text x="832" y="304" text-anchor="middle" font-size="26" fill="#c9d3dc">Rendering and queries</text>
+<text x="1444" y="100" text-anchor="middle" font-size="44" font-weight="700" fill="#f4f1ea">Clients</text>
+<text x="1444" y="160" text-anchor="middle" font-size="36" font-weight="700" fill="#f2b24d">Viewers · GIS · apps</text>
+<text x="1444" y="230" text-anchor="middle" font-size="28" fill="#c9d3dc">Web maps, QGIS</text>
+<text x="1444" y="270" text-anchor="middle" font-size="28" fill="#c9d3dc">Dashboards</text>
+<line x1="450" y1="170" x2="590" y2="170" stroke="#f4f1ea" stroke-width="4"/>
+<polygon points="604,170 584,159 584,181" fill="#f4f1ea"/>
+<line x1="1062" y1="170" x2="1202" y2="170" stroke="#f4f1ea" stroke-width="4"/>
+<polygon points="1216,170 1196,159 1196,181" fill="#f4f1ea"/>
+<text x="526" y="140" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">SQL</text>
+<text x="1138" y="140" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">HTTP</text>
+<text x="220" y="400" text-anchor="middle" font-size="28" fill="#f2b24d" font-weight="700">Always-on, scales vertically</text>
+<text x="832" y="400" text-anchor="middle" font-size="28" fill="#f2b24d" font-weight="700">Each request loads the server</text>
+<text x="1444" y="400" text-anchor="middle" font-size="28" fill="#f2b24d" font-weight="700">Clients need OGC knowledge</text>
+<text x="0" y="500" font-size="28" fill="#c9d3dc">Compute and hosting stay server-side at every step.</text>
+</svg>

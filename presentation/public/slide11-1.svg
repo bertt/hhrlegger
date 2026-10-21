@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="Diagram: one collection folder netherlands-provinces with three entrances: collection.json for software, README.md for people, AGENTS.md for AI agents; below, the same published assets: GeoParquet, PMTiles, styles, thumbnail and original source" viewBox="0 0 1664 660" width="1664" height="660" font-family="Helvetica Neue, Arial, sans-serif">
+<text x="832" y="30" text-anchor="middle" font-size="28" font-weight="700" fill="#c9d3dc">ONE COLLECTION · THREE ENTRANCES</text>
+<rect x="572" y="50" width="520" height="90" rx="16" fill="#14202b" stroke="#f2b24d" stroke-width="3"/>
+<text x="832" y="107" text-anchor="middle" font-size="30" font-weight="700" fill="#f4f1ea" font-family="SFMono-Regular, Menlo, Consolas, monospace">netherlands-provinces/</text>
+<path d="M832 140 V190 M260 190 H1404 M260 190 V230 M832 190 V230 M1404 190 V230" stroke="#8fb4d9" stroke-width="4" fill="none"/>
+<rect x="0" y="230" width="520" height="220" rx="20" fill="#1a4d80" stroke="#2d6aa3" stroke-width="2"/>
+<rect x="572" y="230" width="520" height="220" rx="20" fill="#1a4d80" stroke="#2d6aa3" stroke-width="2"/>
+<rect x="1144" y="230" width="520" height="220" rx="20" fill="#1a4d80" stroke="#2d6aa3" stroke-width="2"/>
+<text x="260" y="285" text-anchor="middle" font-size="26" font-weight="700" fill="#f2b24d">SOFTWARE</text>
+<text x="832" y="285" text-anchor="middle" font-size="26" font-weight="700" fill="#f2b24d">PEOPLE</text>
+<text x="1404" y="285" text-anchor="middle" font-size="26" font-weight="700" fill="#f2b24d">AI AGENTS</text>
+<text x="260" y="350" text-anchor="middle" font-size="38" font-weight="700" fill="#f4f1ea" font-family="SFMono-Regular, Menlo, Consolas, monospace">collection.json</text>
+<text x="832" y="350" text-anchor="middle" font-size="38" font-weight="700" fill="#f4f1ea" font-family="SFMono-Regular, Menlo, Consolas, monospace">README.md</text>
+<text x="1404" y="350" text-anchor="middle" font-size="38" font-weight="700" fill="#f4f1ea" font-family="SFMono-Regular, Menlo, Consolas, monospace">AGENTS.md</text>
+<text x="260" y="415" text-anchor="middle" font-size="28" fill="#c9d3dc">metadata · links</text>
+<text x="832" y="415" text-anchor="middle" font-size="28" fill="#c9d3dc">meaning · license</text>
+<text x="1404" y="415" text-anchor="middle" font-size="28" fill="#c9d3dc">queries · caveats</text>
+<text x="832" y="513" text-anchor="middle" font-size="26" font-weight="700" fill="#c9d3dc">THE SAME PUBLISHED ASSETS</text>
+<rect x="254" y="530" width="230" height="56" rx="12" fill="#14202b"/><rect x="508" y="530" width="190" height="56" rx="12" fill="#14202b"/><rect x="722" y="530" width="160" height="56" rx="12" fill="#14202b"/><rect x="906" y="530" width="200" height="56" rx="12" fill="#14202b"/><rect x="1130" y="530" width="280" height="56" rx="12" fill="#14202b"/>
+<text x="369" y="568" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">GeoParquet</text>
+<text x="603" y="568" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">PMTiles</text>
+<text x="802" y="568" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">styles</text>
+<text x="1006" y="568" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">thumbnail</text>
+<text x="1270" y="568" text-anchor="middle" font-size="28" font-weight="700" fill="#f4f1ea">original source</text>
+<text x="832" y="640" text-anchor="middle" font-size="28" fill="#c9d3dc">collection.json serves software, README.md serves people, AGENTS.md guides agents.</text>
+</svg>

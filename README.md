@@ -10,6 +10,7 @@ The catalog metadata follows [STAC](https://stacspec.org/) (SpatioTemporal Asset
 
 - Original Esri map: https://rijnland.maps.arcgis.com/apps/instant/sidebar/index.html?appid=f0fd839278474fe7841a12800fcc3e39
 - HHR legger - oppervlaktewateren (recreated): https://bertt.github.io/hhrlegger/oppervlaktewateren/
+- Presentation (Slidev, "Cloud-Native Geodata for People and AI Agents"): https://bertt.github.io/hhrlegger/presentation/
 
 This document walks through the following steps:
 
