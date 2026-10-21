@@ -267,6 +267,14 @@ Source: [Portolan registry](https://www.portolan-sdi.org/registry)
 | Studio Bereikbaar Data Lab | NWB | https://browser.portolan-sdi.org/#/external/s3.hidrive.strato.com/sb-portolan-lab/catalog.json |
 | Gemeente Utrecht | By Bert Temme | https://browser.portolan-sdi.org/#/external/utrecht.blob.core.windows.net/catalog/catalog.json |
 
+## Further listening
+
+[Cloud Native Geospatial for Small Teams](https://mapscaping.com/podcast/cloud-native-geospatial-for-small-teams/) (Mapscaping podcast): the Utah Geological Survey moved from a traditional ArcGIS Server setup to Postgres and GeoServer, and then to a cloud-native pipeline built on GeoParquet, PMTiles, and a STAC catalog.
+
+## Community
+
+Questions about Portolan or cloud-native geospatial? Join the discussion in the [Cloud Native Geo Slack channel](https://cloudnativegeo.slack.com/archives/C0A1JBH9529).
+
 ## Conclusion
 
 With Portolan, a map with your own data (sourced from WFS, WMS or ArcGIS) can be run without the hosting, maintenance and license costs of databases and application servers. The data is converted to cloud native formats and deployed to S3-compatible blob storage, which serves it as static files. The only remaining cost is cheap blob storage.
