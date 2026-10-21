@@ -18,8 +18,9 @@ This document walks through the following steps:
 3. Add PMTiles (vector tiles) for each layer.
 4. Generate human readable documentation for each layer.
 5. Fill the `AGENTS.md` files with an AI tool.
-6. Push the catalog to Azure Blob Storage.
-7. Use the result: the published PMTiles, styles and GeoParquet files, and the MapLibre demo.
+6. Validate the catalog with `portolan check` before publishing.
+7. Push the catalog to Azure Blob Storage.
+8. Use the result: the published PMTiles, styles and GeoParquet files, and the MapLibre demo.
 
 ## History of Portolan
 
@@ -104,7 +105,17 @@ Use an AI tool (e.g. GitHub Copilot CLI) to fill the `AGENTS.md` files. Each dat
 - **Example queries**: only queries that were actually run, with result excerpts
 - **Related collections**: join keys to the other layers
 
-### 6. Push
+### 6. Check
+
+Before pushing, validate the catalog with `portolan check` in the catalog root:
+
+```bash
+portolan check
+```
+
+The check is powered by [rashid](https://github.com/portolan-sdi/rashid), a validator and linter for Portolan catalogs. It verifies that the catalog follows the Portolan spec (valid STAC `catalog.json` and collections, links, assets, and cloud-native formats such as GeoParquet and PMTiles) and reports errors and warnings. Fix the reported issues, run the check again until it passes, and then push.
+
+### 7. Push
 
 ```bash
 cd leggers_legger_oppervlaktewater_vigerend
