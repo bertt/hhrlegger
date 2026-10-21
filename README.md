@@ -269,7 +269,7 @@ Source: [Portolan registry](https://www.portolan-sdi.org/registry)
 
 ## Further listening
 
-[Cloud Native Geospatial for Small Teams](https://mapscaping.com/podcast/cloud-native-geospatial-for-small-teams/) (Mapscaping podcast): the Utah Geological Survey moved from a traditional ArcGIS Server setup to Postgres and GeoServer, and then to a cloud-native pipeline built on GeoParquet, PMTiles, and a STAC catalog.
+[Cloud Native Geospatial for Small Teams](https://mapscaping.com/podcast/cloud-native-geospatial-for-small-teams/) (Mapscaping podcast): the Utah Geological Survey moved from a traditional ArcGIS Server setup to Postgres and GeoServer, and then to a cloud-native pipeline built on GeoParquet, PMTiles, and a STAC catalog. Turning off two servers saved around $25K/yr.
 
 ## Community
 
