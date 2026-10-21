@@ -291,6 +291,21 @@ Other agents: see the [installation instructions](https://github.com/portolan-sd
 - "Mirror this ArcGIS FeatureServer as a Portolan catalog: `<URL>`"
 - "Use `reading-portolan` to list the collections in `https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json`."
 
+## Referencing external data
+
+`portolan add-external` registers data that is already published cloud-natively (for example a GeoParquet file on S3) as a collection, without downloading or converting it. The collection's `data` asset points to the remote URL (with the `external` role) and a `rel:via` link records the provenance. A license is required.
+
+```bash
+portolan add-external \
+    "s3://overturemaps-us-west-2/release/2024-09-18.0/theme=places/type=place/*" \
+    --collection overture-places \
+    --title "Overture Maps - Places" \
+    --license ODbL-1.0 \
+    --via "https://docs.overturemaps.org/guides/places/"
+```
+
+This is meant for cloud-native files, not for live WFS or ArcGIS services. Those are converted to GeoParquet with `portolan extract`.
+
 ## Versioning
 
 `portolan version` manages the versions of a collection. It works with any versioning backend (`file` or `iceberg`); the backend is auto-detected from the catalog configuration.
