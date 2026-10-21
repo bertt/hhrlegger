@@ -293,17 +293,6 @@ Source: [Portolan registry](https://www.portolan-sdi.org/registry)
 
 [Cloud Native Geospatial for Small Teams](https://mapscaping.com/podcast/cloud-native-geospatial-for-small-teams/) (Mapscaping podcast): the Utah Geological Survey moved from a traditional ArcGIS Server setup to Postgres and GeoServer, and then to a cloud-native pipeline built on GeoParquet, PMTiles, and a STAC catalog. Turning off two servers saved around $25K/yr.
 
-## Portolan data formats
-
-Portolan prescribes cloud-native formats per data type:
-
-| Data type | Format |
-|-----------|--------|
-| Vector | GeoParquet or PMTiles (required) |
-| Raster | Cloud Optimized GeoTIFF (COG) |
-| Point clouds | Cloud Optimized Point Cloud (COPC) |
-| Tabular (non-spatial) | Apache Parquet |
-
 ## Portolan on GitHub
 
 The [portolan-sdi](https://github.com/portolan-sdi) organization hosts the tools and specifications for Cloud-Native Geospatial Spatial Data Infrastructure. The main repositories:
