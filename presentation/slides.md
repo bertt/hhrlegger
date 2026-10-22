@@ -626,11 +626,9 @@ copilot plugin install portolan@portolan-skills
 </div>
 <div class="card" style="font-size:0.75em">
 
-**Example prompts**
+**Example prompt**
 
-- “Use `portolan-bootstrap` to publish the GeoPackages in `data/` as a Portolan catalog.”
-- “Mirror this ArcGIS FeatureServer as a Portolan catalog: `<URL>`”
-- “Use `reading-portolan` to list the collections in `.../hhrlegger/catalog.json`.”
+- “Use the bootstrap skill from Portolan to make a mirror of these data from HHR Rijnland: https://rijnland.enl-mcs.nl/arcgis/rest/services/Leggers/Legger_Oppervlaktewater_Vigerend/MapServer. Please make sure that we publish this as a git-backed catalog with really nice thumbnails, and that we publish it to Azure blob store. Let me know what further info you end up needing from me.”
 
 </div>
 </div>
@@ -704,18 +702,18 @@ The Utah Geological Survey moved from ArcGIS Server, to Postgres and GeoServer, 
 
 # Portolan on GitHub
 
-| Repository | Description |
-|---|---|
-| [portolan-cli](https://github.com/portolan-sdi/portolan-cli) | CLI for cloud-native geospatial data |
-| [portolan-spec](https://github.com/portolan-sdi/portolan-spec) | Specification and best practices |
-| [portolan-skills](https://github.com/portolan-sdi/portolan-skills) | Agent skills |
-| [portolan-browser](https://github.com/portolan-sdi/portolan-browser) | Vue UI for browsing STAC catalogs |
-| [portolan-registry](https://github.com/portolan-sdi/portolan-registry) | Unified catalog registry |
-| [portolan-registry-qgis](https://github.com/portolan-sdi/portolan-registry-qgis) | QGIS plugin |
-| [rashid](https://github.com/portolan-sdi/rashid) | Validator and linter |
-| [portolan-catalog-template](https://github.com/portolan-sdi/portolan-catalog-template) | Git-backed catalog template |
+| Repository | Description | ⭐ Stars | Created |
+|---|---|--:|---|
+| [portolan-cli](https://github.com/portolan-sdi/portolan-cli) | CLI for cloud-native geospatial data | 41 | 14 Jan 2026 |
+| [portolan-spec](https://github.com/portolan-sdi/portolan-spec) | Specification and best practices | 34 | 26 Jan 2026 |
+| [portolan-registry-qgis](https://github.com/portolan-sdi/portolan-registry-qgis) | QGIS plugin | 13 | 7 Oct 2026 |
+| [portolan-skills](https://github.com/portolan-sdi/portolan-skills) | Agent skills | 10 | 7 May 2026 |
+| [portolan-browser](https://github.com/portolan-sdi/portolan-browser) | Vue UI for browsing STAC catalogs | 7 | 29 Apr 2026 |
+| [portolan-registry](https://github.com/portolan-sdi/portolan-registry) | Unified catalog registry | 7 | 9 Jun 2026 |
+| [rashid](https://github.com/portolan-sdi/rashid) | Validator and linter | 5 | 26 Jun 2026 |
+| [portolan-catalog-template](https://github.com/portolan-sdi/portolan-catalog-template) | Git-backed catalog template | 0 | 12 Aug 2026 |
 
-<div class="source"><a href="https://github.com/portolan-sdi">github.com/portolan-sdi</a> · <a href="https://www.portolan-sdi.org/">portolan-sdi.org</a></div>
+<div class="source">Stars measured on 22 Oct 2026 · <a href="https://github.com/portolan-sdi">github.com/portolan-sdi</a> · <a href="https://www.portolan-sdi.org/">portolan-sdi.org</a></div>
 
 ---
 
