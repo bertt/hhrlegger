@@ -504,7 +504,7 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 ---
 
-# Ask the data: AI agents
+# Ask the data: AI agents, water depth at a given location
 
 <div class="lead">Point an agent at <code>catalog.json</code>. It follows the STAC links, reads AGENTS.md and queries the GeoParquet over HTTP with DuckDB.</div>
 
@@ -526,10 +526,21 @@ line lies about 27 m from your point. Width 17.27 m, bottom width 9.77 m, status
 Source: watergang_as, CC-BY-4.0 (Hoogheemraadschap van Rijnland).</span></pre>
 </div>
 
+<div style="font-size:0.55em;font-weight:600;margin-top:6px">Behind the scenes: DuckDB Query</div>
+
+```sql
+SELECT CODE, NAAM, WATERDIEPTE, BREEDTE, BODEMBREEDTE, STATUSLEGGERWATERSYSTEEM,
+       round(ST_Distance(geometry, ST_Point(93900, 463500)), 1) AS afstand_m
+FROM read_parquet('https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet')
+ORDER BY afstand_m
+LIMIT 5;
+```
+
 ---
 
 # Federated query across two catalogs
 
+<div class="lead">Deepest canals in Leiden</div>
 <div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:12px 20px;font-family:Consolas,monospace;font-size:0.5em;line-height:1.3;text-align:left;margin-top:6px">
 <pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">&gt;</span> I have two Portolan catalogs: the water board legger at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
   and Portolan NL (PDOK) at https://source.coop/cholmes/portolan-nl/catalog.json.
@@ -558,6 +569,27 @@ excluding "Verwijderd" and null depths. Both layers EPSG:28992. Many segments ti
 </div>
 
 <div class="source">Boundaries from Portolan NL (PDOK), depths from the HHR legger</div>
+
+<div style="font-size:0.55em;font-weight:600;margin-top:6px">Behind the scenes: DuckDB Query</div>
+
+```sql
+INSTALL spatial; LOAD spatial;
+
+-- Query 1, PDOK catalog: boundary of Leiden
+CREATE TEMP TABLE gem AS
+SELECT geom g
+FROM read_parquet('https://data.source.coop/cholmes/portolan-nl/kadaster/bestuurlijke_gebieden/gemeentegebied.parquet')
+WHERE naam = 'Leiden';
+```
+
+```sql
+-- Query 2, water board catalog: deepest watergangen intersecting Leiden
+SELECT a.CODE, a.NAAM, a.WATERDIEPTE, round(a.LENGTE) AS lengte_m
+FROM read_parquet('https://flatgeobuf.blob.core.windows.net/hhrlegger/watergang_as/watergang_as.parquet') a, gem
+WHERE ST_Intersects(a.geometry, gem.g)
+ORDER BY a.WATERDIEPTE DESC
+LIMIT 10;
+```
 
 ---
 layout: center
