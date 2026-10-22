@@ -483,7 +483,7 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 ---
 
-# Also in desktop GIS
+# Also in desktop GIS (sort of ...)
 
 <div class="grid grid-cols-2 gap-6 mt-2">
 <div class="card">
