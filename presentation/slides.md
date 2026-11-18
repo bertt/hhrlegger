@@ -512,11 +512,11 @@ RustGIS browses the PDOK STAC catalog and reads GeoParquet in place, e.g. the 34
 
 # Ask the data: AI agents, water depth at a given location
 
-<div class="lead">Point an agent at <code>catalog.json</code>. It follows the STAC links, reads AGENTS.md and queries the GeoParquet over HTTP with DuckDB.</div>
+<div class="lead">The question: <strong>how deep is the watergang at RD coordinate 93900, 463500?</strong></div>
 
 <div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:16px 22px;font-family:Consolas,monospace;font-size:0.5em;line-height:1.45;text-align:left;margin-top:8px">
 <pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">&gt;</span> I have a Portolan catalog of the water board at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
-  and I want to know the water depth of the watergang at 93900, 463500
+  and I want to know the water depth of the watergang at 93900, 463500 (RD New: x, y)
 &nbsp;
 <span style="color:#d2a8ff">skill(reading-portolan)</span>
 <span style="color:#7ee787">●</span> Shell  <span style="color:#8b949e">Fetch catalog (irm catalog.json, curl AGENTS.md)</span>
@@ -546,7 +546,7 @@ LIMIT 5;
 
 # Federated query across two catalogs
 
-<div class="lead">Deepest canals in Leiden</div>
+<div class="lead">The question: <strong>which are the 10 deepest watergangen (water board legger) within the municipality of Leiden (PDOK boundary)?</strong></div>
 <div style="background:#0d1117;color:#e6edf3;border-radius:12px;padding:12px 20px;font-family:Consolas,monospace;font-size:0.5em;line-height:1.3;text-align:left;margin-top:6px">
 <pre style="margin:0;background:none;color:inherit;font:inherit;white-space:pre-wrap"><span style="color:#58a6ff">&gt;</span> I have two Portolan catalogs: the water board legger at https://flatgeobuf.blob.core.windows.net/hhrlegger/catalog.json
   and Portolan NL (PDOK) at https://source.coop/cholmes/portolan-nl/catalog.json.
