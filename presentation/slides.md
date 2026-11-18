@@ -483,9 +483,9 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 
 ---
 
-# Also in desktop GIS (sort of ...)
+# Also in desktop GIS
 
-<div class="grid grid-cols-2 gap-6 mt-2">
+<div class="grid grid-cols-3 gap-6 mt-2">
 <div class="card">
 
 ### QGIS
@@ -498,9 +498,15 @@ portolan push https://flatgeobuf.blob.core.windows.net/hhrlegger/
 [GeoLibre](https://geolibre.app/) 3 and up has a built-in Portolan catalog browser, no plugin needed.
 
 </div>
+<div class="card">
+
+### RustGIS
+RustGIS browses the PDOK STAC catalog and reads GeoParquet in place, e.g. the 342 municipalities.
+
+</div>
 </div>
 
-<img class="shot-img mt-4" src="/screenshots/geolibre.png" alt="GeoLibre catalog browser" style="height:330px;width:auto;margin:1rem auto 0;display:block" />
+<img class="shot-img mt-4" src="/screenshots/rustgis.png" alt="RustGIS browsing the PDOK STAC catalog" style="height:330px;width:auto;margin:1rem auto 0;display:block" />
 
 ---
 
@@ -714,6 +720,28 @@ Catalogs from many publishers become searchable in one place, while the data sta
 
 ---
 
+# PDOK: cloud-native data products and STAC records
+
+<div class="lead">DEMO: <a href="https://app.pdok.nl/cloud-demo-viewer/">app.pdok.nl/cloud-demo-viewer</a> · STAC catalog: <code>https://app.pdok.nl/cloud-demo-viewer/catalog.json</code></div>
+
+| Collection | What is in it |
+|---|---|
+| `bgt` | Basisregistratie Grootschalige Topografie: large-scale base map with buildings, roads, water, railways and terrain as ~50 GeoParquet files (`pand`, `wegdeel`, `waterdeel`, `spoor`, ...) |
+| `brk-bestuurlijke-gebieden` | Administrative boundaries from the BRK: `gemeentegebied`, `provinciegebied` and `landgebied` |
+| `brk-publiekrechtelijke-beperkingen-wkpb` | Public-law restrictions on land (Wkpb) as lines and polygons: `pb_multilinestring`, `pb_multipolygon` |
+
+```sql
+-- Municipalities per province, straight from the PDOK GeoParquet file
+SELECT ligt_in_provincie_naam AS provincie, count(*) AS gemeenten
+FROM read_parquet('https://app.pdok.nl/cloud-demo-viewer/data/kadaster/brk-bestuurlijke-gebieden/gemeentegebied-28992.parquet')
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+
+<div class="source">Shown at GeoBuzz on Monday 16 Nov 2026 · Data: <a href="https://app.pdok.nl/cloud-demo-viewer/">PDOK cloud demo viewer</a></div>
+
+---
+
 # Real-world savings
 
 <div class="grid grid-cols-[1fr_2fr] gap-8 items-center mt-4">
@@ -729,23 +757,6 @@ The Utah Geological Survey moved from ArcGIS Server, to Postgres and GeoServer, 
 
 </div>
 </div>
-
----
-
-# Portolan on GitHub
-
-| Repository | Description | ⭐ Stars | Created |
-|---|---|--:|---|
-| [portolan-cli](https://github.com/portolan-sdi/portolan-cli) | CLI for cloud-native geospatial data | 41 | 14 Jan 2026 |
-| [portolan-spec](https://github.com/portolan-sdi/portolan-spec) | Specification and best practices | 34 | 26 Jan 2026 |
-| [portolan-registry-qgis](https://github.com/portolan-sdi/portolan-registry-qgis) | QGIS plugin | 13 | 7 Oct 2026 |
-| [portolan-skills](https://github.com/portolan-sdi/portolan-skills) | Agent skills | 10 | 7 May 2026 |
-| [portolan-browser](https://github.com/portolan-sdi/portolan-browser) | Vue UI for browsing STAC catalogs | 7 | 29 Apr 2026 |
-| [portolan-registry](https://github.com/portolan-sdi/portolan-registry) | Unified catalog registry | 7 | 9 Jun 2026 |
-| [rashid](https://github.com/portolan-sdi/rashid) | Validator and linter | 5 | 26 Jun 2026 |
-| [portolan-catalog-template](https://github.com/portolan-sdi/portolan-catalog-template) | Git-backed catalog template | 0 | 12 Aug 2026 |
-
-<div class="source">Stars measured on 22 Oct 2026 · <a href="https://github.com/portolan-sdi">github.com/portolan-sdi</a> · <a href="https://www.portolan-sdi.org/">portolan-sdi.org</a></div>
 
 ---
 
